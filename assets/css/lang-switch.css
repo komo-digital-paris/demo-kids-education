@@ -916,5 +916,132 @@ html[lang="en"] [data-lang="en"] { display: inline !important; }
 }
 .finder-restart:hover { opacity: 1; }
 
-/* Hide leftover BYQ template promo blocks */
-.master-sales-pages, .sales-cta-master, .sales-pages { display:none !important; }
+/* Hide leftover BYQ template promo blocks AND the slim divs that sat above
+   the footer with no opaque background — they were leaking the sticky
+   hero video through, creating the dark gap right before the footer. */
+.master-sales-pages,
+.sales-cta-master,
+.sales-pages,
+.master-sales-ctas,
+.button-with-tooltip,
+.ultra-small-bar,
+.byq-promo,
+.byq-modal { display: none !important; }
+
+/* Force <section class="footer"> (and any other footer wrapper) to be
+   opaque + above the sticky hero so it can't be transparent-bypassed. */
+section.footer,
+.section.footer,
+.master-footer,
+.footer-master-wrap {
+  background-color: var(--lpt-bg) !important;
+  position: relative;
+  z-index: 2;
+}
+
+/* === Comprehensive responsive layout =============================
+   The Webflow template ships breakpoints at 991px (tablet) and 767px
+   (mobile), but our custom additions (navbar fit-content, finder card,
+   testimonial peek, home camps grid, etc.) need their own responsive
+   behaviour so the page actually adapts on phones. */
+
+/* --- Tablet (≤991px) ---------------------------------------------- */
+@media (max-width: 991px) {
+  .navbar {
+    width: auto !important;
+    max-width: calc(100vw - 1.5rem) !important;
+    padding: 0.5rem 1rem !important;
+  }
+  .nav-container { gap: 1rem !important; }
+  .home-camps-grid { grid-template-columns: repeat(2, 1fr) !important; }
+  .camps-grid { grid-template-columns: repeat(2, 1fr) !important; }
+  .camps-stats-wrap { grid-template-columns: repeat(2, 1fr) !important; gap: 2rem; }
+  .home-camps-section { padding: 6rem 1.5rem !important; }
+  .finder-section   { padding: 6rem 1.5rem !important; }
+  .testimonial-home-section .mask-testimonial-slide.w-slider-mask {
+    max-width: calc(100vw - 8rem) !important;
+  }
+  .testimonial-home-section .w-slider-arrow-left { left: 1rem !important; }
+  .testimonial-home-section .w-slider-arrow-right { right: 1rem !important; }
+  .teachers-grid { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)) !important; }
+}
+
+/* --- Mobile (≤767px) ---------------------------------------------- */
+@media (max-width: 767px) {
+  .navbar {
+    width: auto !important;
+    max-width: calc(100vw - 1rem) !important;
+    padding: 0.45rem 0.85rem !important;
+    border-radius: 999px;
+  }
+  .nav-container { gap: 0.65rem !important; }
+  .lang-switch { margin: 0 0.35rem 0 auto !important; }
+  .lang-switch a { padding: 0.2em 0.45em; font-size: 0.78em; }
+  .logo-nav { height: 32px !important; }
+  .cta-small { padding: 0.5rem 0.85rem !important; font-size: .82rem; }
+
+  .home-camps-grid,
+  .home-camps-grid > * { grid-template-columns: 1fr !important; }
+  .home-camps-grid { grid-template-columns: 1fr !important; gap: 1.25rem !important; }
+  .camps-grid { grid-template-columns: 1fr !important; }
+  .camps-stats-wrap { grid-template-columns: repeat(2, 1fr) !important; }
+
+  .home-camps-section,
+  .testimonial-home-section,
+  .features-section,
+  .philosophy-section,
+  .stats-section,
+  .blog-carousel-section,
+  .faq-section,
+  .home-camps-wrap { padding-left: 1rem !important; padding-right: 1rem !important; }
+  .home-camps-section { padding-top: 4rem !important; padding-bottom: 4rem !important; }
+
+  .finder-section { padding: 4rem 1rem !important; }
+  .finder-card { padding: 2rem 1.25rem !important; min-height: 0 !important; border-radius: 1.5rem !important; }
+  .finder-options { grid-template-columns: 1fr !important; }
+  .finder-q { font-size: 1.1rem !important; }
+  .finder-h2 { font-size: clamp(1.6rem, 6vw, 2.4rem) !important; }
+  .finder-result-name { font-size: 1.5rem !important; }
+
+  /* Carousel: arrows go to the EDGES of the viewport on phones */
+  .testimonial-home-section .slider.w-slider { padding-bottom: 4rem !important; }
+  .testimonial-home-section .mask-testimonial-slide.w-slider-mask {
+    max-width: calc(100vw - 4rem) !important;
+  }
+  .testimonial-home-section .w-slider-arrow-left,
+  .testimonial-home-section .w-slider-arrow-right {
+    width: 38px !important; height: 38px !important;
+    transform: none !important;
+    bottom: 0 !important;
+  }
+  .testimonial-home-section .w-slider-arrow-left  {
+    left: calc(50% - 50px) !important;
+    transform: translateX(-100%) !important;
+  }
+  .testimonial-home-section .w-slider-arrow-right {
+    left: calc(50% + 50px) !important;
+    transform: none !important;
+  }
+
+  .teachers-grid { grid-template-columns: 1fr 1fr !important; gap: 1rem !important; }
+  .teacher-card  { padding: 1rem !important; }
+  .students-grid { grid-template-columns: repeat(2, 1fr) !important; }
+
+  /* Karaoke text smaller and tighter on mobile */
+  [data-karaoke] { max-width: 100% !important; font-size: 1.05rem !important; }
+
+  /* Trust band on mobile: just the SVG marks, slightly bigger */
+  .section.trust-band { padding: 3rem 1rem 2.5rem !important; }
+}
+
+/* --- Small mobile (≤480px) ---------------------------------------- */
+@media (max-width: 480px) {
+  .home-camp-name { font-size: .9rem; }
+  .stats-grid { grid-template-columns: 1fr 1fr !important; gap: 2rem !important; }
+  .footer-master-wrap { padding: 2rem 1rem !important; }
+  .camps-h1 { font-size: clamp(2rem, 8vw, 3rem) !important; }
+}
+
+/* --- Generic helpers: prevent horizontal scroll on small viewports - */
+html, body { overflow-x: hidden; }
+img, video, svg { max-width: 100%; }
