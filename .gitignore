@@ -1,0 +1,18 @@
+# Backup of the original Webflow images, kept locally only
+assets/images-original-backup/
+
+# OS junk
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+
+# Python (if any)
+__pycache__/
+*.pyc
+*.pyo
+
+# Local preview server
+.serve.py

@@ -1,0 +1,920 @@
+/* === LPT brand palette ===========================================
+   Tokens used everywhere by my custom CSS, plus overrides for the
+   Webflow-generated tokens so the entire template inherits the new
+   colours (CTAs, headings, sections, etc.). */
+:root {
+  --lpt-primary:        #ff6b35;   /* warm orange — main CTA */
+  --lpt-primary-dark:   #e55222;   /* hover state */
+  --lpt-secondary:      #1abc9c;   /* fresh teal — secondary accents */
+  --lpt-text:           #2a1810;   /* warm dark brown */
+  --lpt-text-muted:     rgba(42, 24, 16, .65);
+  --lpt-text-soft:      rgba(42, 24, 16, .18);
+  --lpt-bg:             #faf6ed;   /* page background */
+  --lpt-bg-warm:        #f7f1e7;   /* slightly warmer cream for blocks */
+  --lpt-bg-tint:        #ffe9d4;   /* radial-gradient highlight */
+  --lpt-surface:        #ffffff;
+  --lpt-border:         rgba(42, 24, 16, .08);
+}
+
+/* Override Webflow's design tokens so the rest of the template
+   automatically picks up the LPT palette. */
+:root,
+html,
+html.w-mod-js {
+  --_🎨-color--base---background-base--light: var(--lpt-bg);
+  --_🎨-color--base---background-base--dark:  var(--lpt-text);
+  --_🎨-color--base---background-lift--light: var(--lpt-surface);
+  --_🎨-color--base---accent--primary:        var(--lpt-primary);
+}
+
+/* Language toggle — show only the active language's content */
+[data-lang] { display: none !important; }
+html[lang="zh"] [data-lang="zh"],
+html[lang="fr"] [data-lang="fr"],
+html[lang="en"] [data-lang="en"] { display: inline !important; }
+
+/* Switcher (in nav) — inherits the nav typography instead of forcing its own scale.
+   `margin-left: auto` pins it to the right side of the navbar so it always sits
+   right next to the CTA, even when the desktop nav-menu is hidden on mobile
+   (otherwise it floats stranded in dead-centre space). */
+.lang-switch {
+  display: inline-flex;
+  gap: 0.15rem;
+  align-items: center;
+  margin: 0 1rem 0 auto;
+  font: inherit;
+  line-height: 1;
+  flex-shrink: 0;
+}
+.lang-switch a {
+  cursor: pointer;
+  padding: 0.25em 0.55em;
+  border-radius: 999px;
+  opacity: 0.5;
+  text-decoration: none;
+  color: inherit;
+  font-size: 0.82em;
+  font-weight: 600;
+  line-height: 1;
+  transition: opacity .15s, background-color .15s;
+}
+.lang-switch a.is-active { opacity: 1; background: rgba(0,0,0,.08); }
+.lang-switch a:hover { opacity: 1; }
+
+/* Make sure the three-span wrappers never force a new line inside nav items */
+.nav-link [data-lang],
+.nav-dropdown-link [data-lang],
+.nav-dropdown-toggle [data-lang],
+.brand-nav [data-lang],
+.cta-small [data-lang] { white-space: nowrap; }
+
+/* Cap the LPT logo height so the navbar stays compact.
+   `flex-shrink: 0` on brand-nav is critical: Webflow's default
+   .brand-nav { flex: 0 1 auto } combined with the image having
+   max-width: 100% means the logo collapses to 0px the moment the
+   navbar overflows (which it does once we add the trilingual menu +
+   lang switch + CTA). Pinning it to its natural size fixes that. */
+.logo-nav {
+  height: 40px !important;
+  width: auto !important;
+  max-width: none !important;
+  display: block;
+}
+.brand-nav {
+  display: inline-flex !important;
+  align-items: center;
+  flex: 0 0 auto !important;
+  max-width: none !important;
+  min-width: 40px;
+}
+.brand-footer img { height: 40px !important; width: auto !important; }
+
+/* Tighter inter-group gaps so the trilingual menu + switcher + CTA actually fit
+   on standard desktop widths without overflow shrinking the logo. */
+.nav-container { gap: 1.5rem !important; }
+.nav-right { flex: 0 0 auto !important; }
+
+/* Navbar: fit-to-content pill, centered horizontally with comfortable padding.
+   We override the template's fixed width so the bar shrinks to its actual
+   content (logo + menu + switcher + CTA) and doesn't waste space on the sides. */
+.navbar {
+  width: fit-content !important;
+  max-width: calc(100vw - 2rem) !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  padding: 0.5rem 1.25rem !important;
+  box-shadow:
+    0 6px 24px -10px rgba(42, 24, 16, .18),
+    0 2px 8px -4px rgba(42, 24, 16, .08);
+  border: 1px solid rgba(42, 24, 16, .04);
+}
+.nav-container {
+  width: auto !important;
+  max-width: none !important;
+}
+
+/* Teachers grid — LPT style (beige rounded cards, photo on top) */
+.teachers-wrap { padding: 4rem 0 6rem; max-width: 1200px; margin: 0 auto; padding-left: 1.5rem; padding-right: 1.5rem; }
+.teachers-intro { max-width: 780px; margin: 0 auto 3.5rem; text-align: center; }
+.teachers-intro h2, .teachers-h1 { font-size: clamp(2.5rem, 5vw, 3.5rem); font-weight: 700; line-height: 1.05; margin: 0 0 1.5rem; }
+.teachers-intro p  { font-size: 1.05rem; line-height: 1.55; opacity: .78; margin: 0; }
+.teachers-pillars { list-style: none; padding: 0; margin: 0 0 1.5rem; display: flex; flex-wrap: wrap; gap: .6rem; justify-content: center; }
+.teachers-pillars li { background: #f3ede4; border-radius: 999px; padding: .45rem 1rem; font-size: .95rem; line-height: 1.2; }
+.teachers-price { display: inline-block; background: #ff6b35; color: #fff; padding: .5rem 1.1rem; border-radius: 999px; font-weight: 600; font-size: 1rem; }
+.teachers-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.5rem;
+}
+.teacher-card {
+  display: flex; flex-direction: column;
+  background: #f3ede4;
+  border-radius: 1.25rem;
+  padding: 1.5rem;
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+.teacher-card:hover { transform: translateY(-4px); box-shadow: 0 10px 30px -12px rgba(0,0,0,.15); }
+.teacher-photo {
+  width: 100%; aspect-ratio: 4 / 3; object-fit: cover; object-position: center top;
+  border-radius: .75rem;
+  margin-bottom: 1.25rem;
+  background: #e8dfd1;
+}
+.teacher-name { margin: 0 0 .75rem; font-weight: 700; font-size: 1.35rem; line-height: 1.2; }
+.teacher-bio  { font-size: .92rem; line-height: 1.55; opacity: .82; margin: 0; }
+@media (max-width: 640px) {
+  .teachers-grid { grid-template-columns: 1fr; gap: 1rem; }
+  .teacher-card { padding: 1.25rem; }
+  .teacher-name { font-size: 1.2rem; }
+  .teacher-bio  { font-size: .88rem; }
+}
+
+/* Hide Webflow badge injected at runtime */
+.w-webflow-badge { display: none !important; }
+
+/* === Testimonial carousel — show peek of previous & next slides ===
+   Webflow's w-slider clips at mask. We reveal adjacent slides by lifting
+   overflow restrictions on the slider chain and constraining the mask so
+   adjacent slides poke out of its sides. Active slide stays full opacity;
+   peeking ones are dimmed and slightly scaled down. */
+.testimonial-home-section .w-container,
+.testimonial-home-section .slider.w-slider {
+  overflow: visible !important;
+}
+.testimonial-home-section .mask-testimonial-slide.w-slider-mask {
+  overflow: visible !important;
+  max-width: 56rem;        /* central slide width */
+  margin: 0 auto;
+}
+.testimonial-home-section .slide-testimonial.w-slide {
+  padding: 0 .75rem;       /* breathing room between slides */
+  box-sizing: border-box;
+  /* Force full opacity — Webflow's slider script doesn't reliably set .w--current
+     on init, so an opacity-based active-slide rule leaves cards invisible.
+     The peek-at-edges effect (visible mask overflow) is enough visual hierarchy. */
+  opacity: 1 !important;
+  transform: none !important;
+  transition: none;
+}
+/* Slider nav dots: hide (autoplay + peek is enough).
+   Arrows: tight horizontal pair centered just below the testimonial cards,
+   30px gap between them — exactly as requested.
+   We need !important on EVERY positioning property because the template
+   adds a `.slider-button` class to the arrows that forces `position: static`,
+   `margin-top: var(--spacing--48)`, `inset: 0`, etc. — all of which would
+   otherwise win the cascade and break our layout. */
+.testimonial-home-section .w-slider-nav { display: none !important; }
+.testimonial-home-section .slider.w-slider {
+  position: relative !important;
+  padding-bottom: 6rem !important;   /* room below the cards for the arrow pair */
+}
+.testimonial-home-section .w-slider-arrow-left,
+.testimonial-home-section .w-slider-arrow-right {
+  position: absolute !important;
+  inset: auto !important;             /* zero out webflow's `inset: 0` */
+  top: auto !important;
+  bottom: 0 !important;
+  left: 50% !important;
+  right: auto !important;
+  width: 48px !important;
+  height: 48px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: var(--lpt-surface) !important;
+  border: 1px solid rgba(42, 24, 16, .08) !important;
+  border-radius: 999px !important;
+  color: var(--lpt-text) !important;
+  box-shadow:
+    0 6px 18px -6px rgba(42, 24, 16, .18),
+    0 2px 4px -2px rgba(42, 24, 16, .06) !important;
+  opacity: 1 !important;
+  z-index: 10 !important;
+  cursor: pointer !important;
+  font-size: 16px !important;
+  transition: background-color .2s, color .2s, transform .2s, box-shadow .2s,
+              border-color .2s !important;
+}
+/* Each arrow shifted ±(width + 15px) from horizontal centre → 30px gap between */
+.testimonial-home-section .w-slider-arrow-left {
+  transform: translateX(calc(-100% - 15px)) !important;
+}
+.testimonial-home-section .w-slider-arrow-right {
+  transform: translateX(15px) !important;
+}
+.testimonial-home-section .w-slider-arrow-left:hover {
+  background: var(--lpt-text) !important;
+  color: #fff !important;
+  border-color: var(--lpt-text) !important;
+  transform: translateX(calc(-100% - 15px)) translateY(-2px) !important;
+  box-shadow: 0 14px 28px -8px rgba(42, 24, 16, .28) !important;
+}
+.testimonial-home-section .w-slider-arrow-right:hover {
+  background: var(--lpt-text) !important;
+  color: #fff !important;
+  border-color: var(--lpt-text) !important;
+  transform: translateX(15px) translateY(-2px) !important;
+  box-shadow: 0 14px 28px -8px rgba(42, 24, 16, .28) !important;
+}
+/* Inner icon: keep the template's "large" variant visible at full button size,
+   hide the "small" variant. Force SVG to a clean 18px size with brand colour.
+   Don't touch width/height — letting the template auto-size avoids collapsing
+   the SVG to 0px (which is what was making the buttons look like blank discs). */
+.testimonial-home-section .w-slider-arrow-left .icon-slider-button.large,
+.testimonial-home-section .w-slider-arrow-right .icon-slider-button.large {
+  display: flex !important;
+  width: 100% !important;
+  height: 100% !important;
+  position: static !important;
+  margin: 0 !important;
+  align-items: center;
+  justify-content: center;
+  color: inherit;
+}
+.testimonial-home-section .w-slider-arrow-left .icon-slider-button.small,
+.testimonial-home-section .w-slider-arrow-right .icon-slider-button.small {
+  display: none !important;
+}
+.testimonial-home-section .w-slider-arrow-left svg,
+.testimonial-home-section .w-slider-arrow-right svg {
+  width: 18px !important;
+  height: 18px !important;
+  display: block;
+  fill: currentColor;
+  stroke: currentColor;
+}
+/* Webflow's default font-icon fallback (in case the template uses it) */
+.testimonial-home-section .w-slider-arrow-left .w-icon-slider-left,
+.testimonial-home-section .w-slider-arrow-right .w-icon-slider-right {
+  font-size: 18px !important;
+  color: inherit !important;
+  position: static !important;
+  margin: 0 !important;
+  inset: auto !important;
+  width: auto;
+  height: auto;
+}
+@media (max-width: 768px) {
+  .testimonial-home-section .slider.w-slider { padding-bottom: 5rem !important; }
+  .testimonial-home-section .w-slider-arrow-left,
+  .testimonial-home-section .w-slider-arrow-right {
+    width: 42px !important; height: 42px !important;
+  }
+}
+@media (max-width: 768px) {
+  .testimonial-home-section .mask-testimonial-slide.w-slider-mask { max-width: 88vw; }
+  .testimonial-home-section .slide-testimonial.w-slide:not(.w--current) {
+    opacity: .25; transform: scale(.88);
+  }
+}
+
+/* === Home: Summer camps highlight section === */
+.home-camps-section {
+  padding: 8rem 1.5rem;
+  background: var(--lpt-bg);
+}
+.home-camps-wrap { max-width: 1200px; margin: 0 auto; }
+.home-camps-head {
+  display: flex; align-items: flex-end; justify-content: space-between;
+  gap: 2rem; margin-bottom: 3rem; flex-wrap: wrap;
+}
+.home-camps-eyebrow {
+  display: inline-block; font-size: .78rem; letter-spacing: .15em;
+  text-transform: uppercase; font-weight: 600; color: var(--lpt-text); opacity: .55;
+  margin-bottom: .85rem;
+}
+.home-camps-h2 {
+  font-size: clamp(2.2rem, 4.5vw, 3.5rem); font-weight: 700;
+  letter-spacing: -.02em; line-height: 1.05; color: var(--lpt-text); margin: 0;
+}
+.home-camps-sub {
+  font-size: 1.05rem; line-height: 1.55; color: var(--lpt-text); opacity: .7;
+  margin: 1rem 0 0; max-width: 560px;
+}
+.home-camps-link {
+  font-size: .95rem; font-weight: 600; color: var(--lpt-text);
+  text-decoration: none; padding: .65rem 1.2rem; border-radius: 999px;
+  background: var(--lpt-surface); transition: background-color .2s, transform .2s;
+}
+.home-camps-link:hover { background: var(--lpt-bg-warm); transform: translateY(-2px); }
+.home-camps-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem;
+}
+.home-camp-card {
+  display: block; text-decoration: none; color: inherit;
+  transition: transform .25s ease;
+}
+.home-camp-card:hover { transform: translateY(-4px); }
+.home-camp-photo-wrap {
+  position: relative; width: 100%; aspect-ratio: 4 / 5;
+  border-radius: 1.25rem; overflow: hidden; background: var(--lpt-bg-warm);
+}
+.home-camp-photo {
+  width: 100%; height: 100%; object-fit: cover; transition: transform .5s ease;
+}
+.home-camp-card:hover .home-camp-photo { transform: scale(1.05); }
+/* SVG flag — proper rectangular flag (3:2 aspect), with white halo so it
+   reads cleanly on any photo background. Replaces the old emoji-style pill. */
+.home-camp-flag {
+  position: absolute; top: .85rem; left: .85rem;
+  width: 32px; height: auto;
+  display: block;
+  background: none;
+  padding: 0;
+  border-radius: 3px;
+  overflow: hidden;
+  line-height: 0;
+  box-shadow:
+    0 2px 8px rgba(0,0,0,.25),
+    0 0 0 1.5px rgba(255,255,255,.85);
+}
+.home-camp-flag .flag-svg {
+  width: 100%; height: auto;
+  display: block;
+}
+.home-camp-name {
+  margin-top: .85rem; font-size: 1rem; font-weight: 600;
+  color: var(--lpt-text); line-height: 1.3;
+}
+@media (max-width: 900px) {
+  .home-camps-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 540px) {
+  .home-camps-section { padding: 5rem 1.5rem; }
+  .home-camps-head { flex-direction: column; align-items: flex-start; }
+}
+
+/* === Summer camps dedicated page === */
+.camps-hero-section {
+  padding: 7rem 1.5rem 5rem;
+  background:
+    radial-gradient(900px 500px at 50% 10%, var(--lpt-bg-tint) 0%, transparent 70%),
+    var(--lpt-bg);
+  text-align: center;
+}
+.camps-hero-wrap { max-width: 760px; margin: 0 auto; }
+.camps-eyebrow {
+  display: inline-block; font-size: .78rem; letter-spacing: .15em;
+  text-transform: uppercase; font-weight: 600; color: var(--lpt-text);
+  background: var(--lpt-surface); padding: .45rem 1rem; border-radius: 999px;
+  margin-bottom: 1.5rem;
+}
+.camps-h1 {
+  font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: 700;
+  line-height: 1.05; letter-spacing: -.02em; color: var(--lpt-text);
+  margin: 0 0 1.25rem;
+}
+.camps-sub {
+  font-size: 1.1rem; line-height: 1.5; color: var(--lpt-text); opacity: .72;
+  margin: 0 0 2.5rem;
+}
+.camps-cta-main {
+  display: inline-flex; align-items: center; gap: .5rem;
+  background: var(--lpt-text); color: #fff; padding: 1rem 2rem;
+  border-radius: 999px; font-weight: 600; font-size: 1rem;
+  text-decoration: none; transition: transform .2s, background-color .2s;
+}
+.camps-cta-main:hover { transform: translateY(-2px); background: var(--lpt-primary-dark); }
+.camps-cta-main span:last-child { transition: transform .2s; }
+.camps-cta-main:hover span:last-child { transform: translateX(3px); }
+
+.camps-list-section { padding: 5rem 1.5rem 7rem; background: var(--lpt-bg); }
+.camps-list-wrap { max-width: 1200px; margin: 0 auto; }
+.camps-list-h2 {
+  font-size: clamp(1.8rem, 3.6vw, 2.6rem); font-weight: 700;
+  letter-spacing: -.01em; color: var(--lpt-text); margin: 0 0 2.5rem;
+  text-align: center;
+}
+.camps-grid {
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem;
+}
+.camp-card {
+  background: var(--lpt-surface); border-radius: 1.5rem; overflow: hidden;
+  display: flex; flex-direction: column;
+  box-shadow: 0 20px 50px -25px rgba(42, 24, 16, .15);
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+.camp-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 30px 70px -25px rgba(42, 24, 16, .25);
+}
+.camp-photo-wrap {
+  position: relative; width: 100%; aspect-ratio: 16 / 9;
+  background: var(--lpt-bg-warm);
+}
+.camp-photo {
+  width: 100%; height: 100%; object-fit: cover; display: block;
+}
+/* SVG flag on the dedicated summer-camps page — same pattern as home-camp-flag */
+.camp-flag {
+  position: absolute; top: 1rem; left: 1rem;
+  width: 40px; height: auto;
+  display: block;
+  background: none;
+  padding: 0;
+  border-radius: 4px;
+  overflow: hidden;
+  line-height: 0;
+  box-shadow:
+    0 3px 10px rgba(0,0,0,.28),
+    0 0 0 1.5px rgba(255,255,255,.85);
+}
+.camp-flag .flag-svg {
+  width: 100%; height: auto;
+  display: block;
+}
+
+/* Make the orphan English H2 in the blog/program carousel readable while we
+   wait for full trilingual treatment — was rendering near-cream on cream. */
+.blog-carousel-section .heading-program-carousel h2 {
+  color: var(--lpt-text);
+  opacity: 1;
+}
+.camp-body { padding: 1.75rem; }
+.camp-years {
+  font-size: .8rem; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--lpt-primary); font-weight: 600; margin-bottom: .65rem;
+}
+.camp-name {
+  font-size: 1.4rem; font-weight: 700; line-height: 1.2;
+  letter-spacing: -.01em; color: var(--lpt-text); margin: 0 0 .65rem;
+}
+.camp-desc {
+  font-size: .98rem; line-height: 1.55; color: var(--lpt-text); opacity: .75;
+  margin: 0;
+}
+@media (max-width: 720px) {
+  .camps-grid { grid-template-columns: 1fr; gap: 1.25rem; }
+}
+
+.camps-stats-section { padding: 5rem 1.5rem 7rem; background: var(--lpt-surface); }
+.camps-stats-wrap {
+  max-width: 1100px; margin: 0 auto;
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem; text-align: center;
+}
+.camps-stat-num {
+  font-size: clamp(2.5rem, 5vw, 3.5rem); font-weight: 700;
+  letter-spacing: -.02em; color: var(--lpt-text); line-height: 1;
+}
+.camps-stat-label {
+  margin-top: .65rem; font-size: .9rem; color: var(--lpt-text); opacity: .65;
+  letter-spacing: .04em; text-transform: uppercase; font-weight: 500;
+}
+@media (max-width: 640px) {
+  .camps-stats-wrap { grid-template-columns: repeat(2, 1fr); gap: 2rem; }
+}
+
+/* === Karaoke text effect: characters light up as user scrolls through === */
+[data-karaoke] {
+  color: rgba(42, 24, 16, .18);
+  /* Allow wrapping mid-word for CJK (no spaces) and at spaces for latin scripts. */
+  overflow-wrap: anywhere;
+  word-break: normal;
+  max-width: 680px;
+  margin-left: auto;
+  margin-right: auto;
+}
+[data-karaoke] .karaoke-char {
+  color: rgba(42, 24, 16, .18);
+  transition: color .25s cubic-bezier(.2,.8,.2,1);
+}
+[data-karaoke] .karaoke-char.is-lit { color: var(--lpt-text); }
+
+/* === Stacking-scroll effect: hero scrolls a bit, then pins when the next section
+       reaches the middle of the viewport, then the next section slides over it === */
+.section.hero-home-section {
+  position: sticky;
+  /* Negative top = how far the hero is allowed to scroll up before being pinned.
+     With ~50vh of negative offset, the hero scrolls naturally for ~half a viewport,
+     by which point the trust band (which sits right below) has reached the middle
+     of the screen — that's exactly where it gets pinned. */
+  top: -50vh;
+  z-index: 1;
+}
+
+/* === Hero peek-fix: force opaque background on every section, footer block,
+       and any container that sits above the hero in the stacking order. === */
+.section, .master-footer, .footer-master-wrap,
+.master-sales-ctas, .master-page-wrap, .sales-cta-master {
+  background-color: var(--lpt-bg);
+  position: relative;
+  z-index: 2;
+}
+.section.hero-home-section { background-color: transparent; z-index: 1; }
+
+/* All sections that come after the hero must have an opaque background and a
+   higher stacking context so they visually cover the pinned hero as they
+   scroll up from below. */
+.section:not(.hero-home-section),
+.master-footer {
+  position: relative;
+  z-index: 2;
+  background-color: var(--lpt-bg); /* match body cream so transition is invisible */
+}
+/* Trust band sits right after hero — it must also cover. We keep it visually
+   transparent inside, but the section box itself needs an opaque bg. */
+.section.trust-band { background-color: var(--lpt-bg); }
+/* The finder uses the same cream bg already. */
+.section.finder-section { background-color: var(--lpt-bg); }
+/* Features and philosophy sections often have their own bg from Webflow —
+   ensure they also stack above the hero. */
+.section.features-section,
+.section.philosophy-section,
+.section.testimonial-home-section,
+.section.stats-section,
+.section.blog-carousel-section,
+.section.faq-section { z-index: 2; position: relative; }
+
+/* Star Students page */
+.students-wrap { max-width: 1200px; margin: 0 auto; padding: 3rem 1.5rem; }
+.students-hero { text-align: center; padding: 3rem 0 2.5rem; }
+.students-h1   { font-size: clamp(2.5rem, 6vw, 4rem); font-weight: 700; line-height: 1.05; margin: 0 0 1.5rem; }
+.students-pillars { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: .75rem; justify-content: center; }
+.students-pillars li {
+  background: #f3ede4; border-radius: 999px; padding: .5rem 1.1rem;
+  font-size: .95rem; line-height: 1.2;
+}
+.students-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1.25rem;
+  padding-top: 2rem;
+}
+.student-card { display: flex; flex-direction: column; }
+.student-photo {
+  width: 100%; aspect-ratio: 1 / 1; object-fit: cover; object-position: center top;
+  border-radius: .9rem; background: #f3ede4;
+}
+.student-name { margin-top: .8rem; font-size: .95rem; font-weight: 600; text-align: center; }
+
+.works-h2  { font-size: clamp(1.8rem, 3.6vw, 2.6rem); margin: 4rem 0 .75rem; font-weight: 700; text-align: center; }
+.works-sub { font-size: 1rem; line-height: 1.55; opacity: .75; max-width: 620px; margin: 0 auto 2.5rem; text-align: center; }
+.works-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1rem;
+}
+.work-photo {
+  width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: .75rem;
+  background: #f3ede4;
+}
+
+@media (max-width: 640px) {
+  .students-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+  .works-grid    { grid-template-columns: repeat(2, 1fr); gap: .75rem; }
+  .student-name  { font-size: .85rem; }
+}
+
+/* === Language nudge banner === */
+.lang-nudge {
+  position: fixed; bottom: 1.25rem; left: 50%;
+  transform: translateX(-50%) translateY(120%);
+  background: #1a1a1a; color: #fff;
+  padding: .85rem 1rem; border-radius: 999px;
+  display: inline-flex; align-items: center; gap: .65rem;
+  box-shadow: 0 12px 40px -8px rgba(0,0,0,.4);
+  font-size: .92rem; line-height: 1; z-index: 9999;
+  opacity: 0; transition: opacity .3s, transform .35s cubic-bezier(.2,.8,.2,1);
+  max-width: calc(100vw - 2rem); flex-wrap: wrap; justify-content: center;
+}
+.lang-nudge.is-visible { opacity: 1; transform: translateX(-50%) translateY(0); }
+.lang-nudge-msg { padding: 0 .35rem; }
+.lang-nudge-btn {
+  border: 0; border-radius: 999px; padding: .5rem .85rem;
+  font: inherit; cursor: pointer; line-height: 1;
+  background: rgba(255,255,255,.12); color: #fff;
+}
+.lang-nudge-btn.primary { background: var(--lpt-surface); color: #1a1a1a; font-weight: 600; }
+.lang-nudge-btn:hover { background: rgba(255,255,255,.22); }
+.lang-nudge-btn.primary:hover { background: #f5e9d8; }
+
+/* === Trust band — emerging card with rounded top corners === */
+.section.trust-band {
+  padding: 5rem 1.5rem 4rem;
+  background-color: #ffffff !important;  /* opaque white card */
+  border-radius: 2.5rem 2.5rem 0 0;        /* round top corners only */
+  border-bottom: 0;
+  margin-top: -2.5rem;                     /* tuck slightly under previous section so the curve hugs the hero */
+}
+.trust-band-inner { max-width: 1200px; margin: 0 auto; }
+.trust-band-label {
+  text-align: center;
+  font-size: .78rem;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--lpt-text);
+  opacity: .55;
+  margin: 0 0 2.5rem;
+}
+.trust-logos {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem 2rem;
+  width: 100%;
+  max-width: 100%;
+}
+.trust-logo {
+  display: inline-flex;
+  align-items: center;
+  flex: 0 0 auto;             /* never grow to take row width */
+  width: auto;
+  max-width: 100%;
+  gap: .55rem;
+  font-size: .95rem;
+  font-weight: 600;
+  letter-spacing: -.01em;
+  color: var(--lpt-text);
+  opacity: .55;
+  background: none;
+  padding: 0;
+  border-radius: 0;
+  transition: opacity .25s ease, transform .25s ease;
+  white-space: nowrap;
+  font-family: inherit;
+}
+.trust-logo:hover { opacity: 1; transform: translateY(-1px); }
+.trust-logo-mark {
+  width: 26px;
+  height: 26px;
+  min-width: 26px;            /* prevent shrinking when row is tight */
+  flex-shrink: 0;
+  stroke: var(--lpt-text);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  display: inline-block;
+}
+.trust-logo-name { line-height: 1.1; }
+
+/* Tablet: tighter gap, smaller marks */
+@media (max-width: 1024px) {
+  .trust-logos { gap: .85rem 1.4rem; }
+  .trust-logo { font-size: .88rem; gap: .45rem; }
+  .trust-logo-mark { width: 22px; height: 22px; min-width: 22px; }
+}
+
+/* Mobile: hide the wordmark to prevent vertical stacking — the SVG marks
+   become recognizable icons in a single horizontal row. */
+@media (max-width: 640px) {
+  .section.trust-band { padding: 3.5rem 1.25rem 3rem; border-radius: 1.75rem 1.75rem 0 0; }
+  .trust-band-label { margin-bottom: 1.75rem; font-size: .72rem; }
+  .trust-logos { gap: 1rem 1.5rem; }
+  .trust-logo-name { display: none; }
+  .trust-logo-mark { width: 28px; height: 28px; min-width: 28px; }
+  .trust-logo { opacity: .65; }
+}
+
+/* Section directly after trust-band has flat top so the cards stack flush */
+.section.trust-band + .section { border-radius: 0; }
+
+/* === Class finder quiz — visually elevated === */
+.finder-section {
+  padding: 9rem 1.5rem 10rem;
+  background:
+    radial-gradient(1200px 600px at 50% 0%, var(--lpt-bg-tint) 0%, transparent 70%),
+    linear-gradient(180deg, var(--lpt-bg) 0%, var(--lpt-bg-warm) 100%);
+  position: relative;
+  overflow: hidden;
+}
+.finder-section::before {
+  content: ''; position: absolute; inset: 0;
+  background-image:
+    radial-gradient(circle at 15% 20%, rgba(42, 24, 16, .04) 1px, transparent 1.5px),
+    radial-gradient(circle at 85% 75%, rgba(42, 24, 16, .04) 1px, transparent 1.5px);
+  background-size: 32px 32px;
+  pointer-events: none;
+  z-index: 0;
+}
+.finder-section .finder-wrap { position: relative; z-index: 1; }
+.finder-wrap { max-width: 760px; margin: 0 auto; text-align: center; }
+.finder-eyebrow {
+  display: inline-block;
+  background: var(--lpt-surface);
+  border: 1px solid rgba(42, 24, 16, .1);
+  color: var(--lpt-text);
+  padding: .45rem 1rem;
+  border-radius: 999px;
+  font-size: .78rem;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  font-weight: 500;
+  margin-bottom: 1.5rem;
+}
+.finder-h2 {
+  font-size: clamp(2rem, 4.5vw, 3.25rem);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -.01em;
+  color: var(--lpt-text);
+  margin: 0 0 1rem;
+}
+.finder-sub {
+  font-size: 1.05rem;
+  line-height: 1.5;
+  color: var(--lpt-text);
+  opacity: .65;
+  margin: 0 0 3rem;
+}
+
+.finder-card {
+  background: var(--lpt-surface);
+  border-radius: 2rem;
+  padding: 3.5rem 3rem;
+  box-shadow:
+    0 1px 0 rgba(255,255,255,.7) inset,
+    0 50px 100px -30px rgba(42, 24, 16, .25),
+    0 20px 40px -20px rgba(42, 24, 16, .15);
+  text-align: left;
+  position: relative;
+  overflow: hidden;
+  min-height: 460px;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid rgba(255,255,255,.6);
+}
+.finder-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 4px;
+  background: linear-gradient(90deg, var(--lpt-text) 0%, var(--lpt-primary) 50%, var(--lpt-text) 100%);
+}
+.finder-progress {
+  display: flex;
+  gap: .4rem;
+  justify-content: center;
+  margin-bottom: 2.25rem;
+}
+.finder-dot {
+  width: 28px;
+  height: 4px;
+  border-radius: 999px;
+  background: rgba(42, 24, 16, .12);
+  transition: background-color .35s ease, width .35s ease;
+}
+.finder-dot.is-active { background: var(--lpt-text); width: 48px; }
+.finder-dot.is-done   { background: var(--lpt-text); opacity: .55; }
+
+.finder-step { display: none; animation: finderIn .4s ease; flex: 1; }
+.finder-step.is-active { display: flex; flex-direction: column; }
+@keyframes finderIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+
+.finder-q {
+  font-size: 1.45rem;
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: -.01em;
+  color: var(--lpt-text);
+  text-align: center;
+  margin: 0 0 1.75rem;
+}
+.finder-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: .75rem;
+}
+.finder-opt {
+  border: 1.5px solid rgba(42, 24, 16, .12);
+  background: var(--lpt-surface);
+  border-radius: 1rem;
+  padding: 1.1rem 1.25rem;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 500;
+  text-align: left;
+  color: var(--lpt-text);
+  transition: border-color .2s ease, background-color .2s ease, transform .2s ease;
+  line-height: 1.3;
+  font-size: 1rem;
+}
+.finder-opt:hover {
+  border-color: var(--lpt-text);
+  background: var(--lpt-bg-warm);
+  transform: translateY(-1px);
+}
+.finder-opt.is-selected {
+  border-color: var(--lpt-text);
+  background: var(--lpt-bg-warm);
+}
+@media (max-width: 540px) {
+  .finder-section { padding: 5rem 1.5rem; }
+  .finder-options { grid-template-columns: 1fr; }
+  .finder-card { padding: 2rem 1.5rem; min-height: 0; }
+  .finder-q { font-size: 1.2rem; }
+}
+
+.finder-result {
+  text-align: center;
+  display: none;
+  margin: auto 0;
+}
+.finder-result.is-active {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: finderIn .4s ease;
+}
+.finder-result-tag {
+  display: inline-block;
+  background: var(--lpt-text);
+  color: #fff;
+  font-size: .72rem;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  padding: .4rem 1rem;
+  border-radius: 999px;
+  margin-bottom: 1.25rem;
+  font-weight: 600;
+}
+.finder-result-name {
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -.01em;
+  color: var(--lpt-text);
+  margin: 0 0 .65rem;
+}
+.finder-result-desc {
+  font-size: 1.02rem;
+  line-height: 1.55;
+  color: var(--lpt-text);
+  opacity: .72;
+  margin: 0 0 1.5rem;
+  max-width: 520px;
+}
+.finder-result-meta {
+  display: inline-flex;
+  gap: .5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  font-size: .88rem;
+  margin-bottom: 2rem;
+}
+.finder-meta-pill {
+  background: var(--lpt-bg-warm);
+  color: var(--lpt-text);
+  padding: .45rem .9rem;
+  border-radius: 999px;
+  font-weight: 500;
+}
+.finder-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  background: var(--lpt-text);
+  color: #fff;
+  border: 0;
+  padding: .9rem 1.75rem;
+  border-radius: 999px;
+  font: inherit;
+  font-weight: 600;
+  font-size: .98rem;
+  cursor: pointer;
+  text-decoration: none;
+  transition: transform .15s ease, background-color .2s ease;
+}
+.finder-cta:hover { transform: translateY(-2px); background: var(--lpt-primary-dark); }
+.finder-cta span:last-child {
+  display: inline-block;
+  transition: transform .2s ease;
+}
+.finder-cta:hover span:last-child { transform: translateX(3px); }
+.finder-restart {
+  display: block;
+  margin: 1.25rem auto 0;
+  background: none;
+  border: 0;
+  color: var(--lpt-text);
+  font: inherit;
+  font-size: .85rem;
+  opacity: .5;
+  cursor: pointer;
+  text-decoration: underline;
+}
+.finder-restart:hover { opacity: 1; }
+
+/* Hide leftover BYQ template promo blocks */
+.master-sales-pages, .sales-cta-master, .sales-pages { display:none !important; }
