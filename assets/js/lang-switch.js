@@ -179,37 +179,40 @@
 })();
 
 /* ============================================================
-   Testimonial slider — own controller (Webflow's was unreliable)
+   Testimonial slider — document-level delegation (rock-solid)
    ============================================================
-   The Webflow slider script binds click handlers but they don't fire from
-   our restyled arrows for reasons I couldn't pin down. Rather than fight
-   the cascade, we drive the slider ourselves: on click, we shift each
-   slide's translateX by the slide width and update aria-hidden. Webflow's
-   own autoplay can keep running underneath; our manual nav cooperates by
-   reading the current slide from aria-hidden each time. */
+   Earlier per-arrow bindings were fragile: Webflow's slider script
+   sometimes touches the DOM after our setup, and clicks on the SVG
+   children inside the arrows didn't always reach our listener. We now
+   listen on `document` itself in capture phase, then use closest() to
+   find the arrow ancestor — this catches clicks on the arrow, the
+   icon wrapper, the SVG, or the path. Capture phase + stopImmediate-
+   Propagation ensures our handler is the SOLE responder. */
 (function(){
-  function getSlider(){
-    return document.querySelector('.testimonial-home-section .slider.w-slider');
-  }
-  function getSlides(slider){
-    return Array.from(slider.querySelectorAll('.w-slide'));
-  }
+  var SLIDER_SEL = '.testimonial-home-section .slider.w-slider';
+  var ARROW_SEL  = '.testimonial-home-section .w-slider-arrow-left, '
+                 + '.testimonial-home-section .w-slider-arrow-right';
+
+  function getSlider(){ return document.querySelector(SLIDER_SEL); }
+  function getSlides(slider){ return Array.from(slider.querySelectorAll('.w-slide')); }
   function getCurrentIdx(slides){
     for (var i = 0; i < slides.length; i++) {
       if (slides[i].getAttribute('aria-hidden') !== 'true') return i;
     }
     return 0;
   }
-  function advance(slider, direction){
+  function advance(direction){
+    var slider = getSlider();
+    if (!slider) { console.warn('[LPT carousel] no slider'); return; }
     var slides = getSlides(slider);
-    if (!slides.length) return;
+    if (!slides.length) { console.warn('[LPT carousel] no slides'); return; }
     var n = slides.length;
     var current = getCurrentIdx(slides);
     var next = (current + direction + n) % n;
-    // Compute slide width — use the mask width (visible window)
     var mask = slider.querySelector('.w-slider-mask');
-    var slideWidth = mask ? mask.getBoundingClientRect().width : slides[0].getBoundingClientRect().width;
-    // Apply transform + aria-hidden
+    var slideWidth = mask
+      ? mask.getBoundingClientRect().width
+      : slides[0].getBoundingClientRect().width;
     slides.forEach(function(s, i){
       var offset = (i - next) * slideWidth;
       s.style.transition = 'transform 600ms cubic-bezier(.645,.045,.355,1)';
@@ -217,46 +220,61 @@
       s.setAttribute('aria-hidden', i === next ? 'false' : 'true');
       s.classList.toggle('w--current', i === next);
     });
+    console.log('[LPT carousel] advance', direction, '→ slide', next + 1, '/', n);
   }
-  function bind(){
+
+  // WINDOW-level capture-phase delegation. Webflow's slider script binds a
+   // capture-phase listener on `document` that calls stopPropagation, so any
+   // listener at document or below gets blocked. By listening on `window`
+   // (the very first node in the capture phase) we run BEFORE Webflow's
+   // listener and catch the click no matter what it does afterwards.
+   window.addEventListener('click', function(e){
+    var arrow = e.target.closest && e.target.closest(ARROW_SEL);
+    if (!arrow) return;
+    e.preventDefault();
+    e.stopImmediatePropagation();
+    var dir = arrow.classList.contains('w-slider-arrow-right') ? 1 : -1;
+    advance(dir);
+  }, true);
+
+  // Keyboard support — when arrow is focused, Enter / Space advances.
+  document.addEventListener('keydown', function(e){
+    var active = document.activeElement;
+    var arrow = active && active.closest && active.closest(ARROW_SEL);
+    if (!arrow) return;
+    if (e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar') {
+      e.preventDefault();
+      var dir = arrow.classList.contains('w-slider-arrow-right') ? 1 : -1;
+      advance(dir);
+    }
+  });
+
+  // Initialise the first slide so the styles + transforms are correct
+  // even before the user touches anything.
+  function initFirstSlide(){
     var slider = getSlider();
     if (!slider) return false;
-    var arrows = slider.querySelectorAll('.w-slider-arrow-left, .w-slider-arrow-right');
-    if (!arrows.length) return false;
-    arrows.forEach(function(arrow){
-      if (arrow.dataset.lptManual) return;
-      arrow.dataset.lptManual = '1';
-      var dir = arrow.classList.contains('w-slider-arrow-right') ? 1 : -1;
-      arrow.addEventListener('click', function(e){
-        e.preventDefault();
-        e.stopImmediatePropagation();
-        advance(slider, dir);
-      }, true);
-      arrow.addEventListener('keydown', function(e){
-        if (e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar') {
-          e.preventDefault();
-          advance(slider, dir);
-        }
-      });
-    });
-    // Ensure first slide has w--current on init so styles can target it
     var slides = getSlides(slider);
-    if (slides.length && !slider.querySelector('.w-slide.w--current')) {
-      var current = getCurrentIdx(slides);
+    if (!slides.length) return false;
+    var current = getCurrentIdx(slides);
+    if (!slider.querySelector('.w-slide.w--current')) {
       slides[current].classList.add('w--current');
     }
+    var mask = slider.querySelector('.w-slider-mask');
+    var slideWidth = mask
+      ? mask.getBoundingClientRect().width
+      : slides[0].getBoundingClientRect().width;
+    slides.forEach(function(s, i){
+      var offset = (i - current) * slideWidth;
+      s.style.transform = 'translateX(' + offset + 'px)';
+    });
     return true;
   }
-  function ready(){
-    if (bind()) return;
-    var tries = 0;
-    var iv = setInterval(function(){
-      if (bind() || ++tries > 50) clearInterval(iv);
-    }, 200);
-  }
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', ready);
+    document.addEventListener('DOMContentLoaded', initFirstSlide);
   } else {
-    ready();
+    initFirstSlide();
   }
+  window.addEventListener('load',   initFirstSlide);
+  window.addEventListener('resize', initFirstSlide);
 })();
