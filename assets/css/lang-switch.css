@@ -1055,6 +1055,28 @@ img, video, svg { max-width: 100%; }
   .section.faq-section { padding-top: 50px !important; }
 }
 
+/* === Hero positioning ============================================
+   Desktop: keep the template's bottom-anchored layout but lift the text
+   off the section edge (template's 80px reads cramped).
+   Mobile: rather than fight cramping at the bottom, anchor the content
+   to the top of the 2nd vertical third (padding-top: 33vh) — gives the
+   headline a clear, balanced placement above the fold. */
+.video-hero-home { padding-bottom: 160px !important; }
+@media (max-width: 991px) { .video-hero-home { padding-bottom: 130px !important; } }
+
+@media (max-width: 767px) {
+  .master-hero-home {
+    justify-content: flex-start !important;
+    padding-top: 33vh !important;
+    padding-bottom: 0 !important;
+  }
+  .video-hero-home { padding-bottom: 0 !important; }
+}
+@media (max-width: 480px) {
+  .master-hero-home { padding-top: 33vh !important; }
+  .video-hero-home { padding-bottom: 0 !important; }
+}
+
 /* === Hero heading: responsive font-size ============================
    The template hardcodes 48-72px which doesn't shrink on phones (long
    French/English strings overflow or break the hero layout). Use a single
