@@ -1045,3 +1045,54 @@ section.footer,
 /* --- Generic helpers: prevent horizontal scroll on small viewports - */
 html, body { overflow-x: hidden; }
 img, video, svg { max-width: 100%; }
+
+/* Tighten the gap between the blog carousel and the FAQ — the template's
+   defaults (120px below + 160px above = 280px of dead space) felt too wide. */
+.section.blog-carousel-section { padding-bottom: 80px !important; }
+.section.faq-section { padding-top: 80px !important; }
+@media (max-width: 767px) {
+  .section.blog-carousel-section { padding-bottom: 50px !important; }
+  .section.faq-section { padding-top: 50px !important; }
+}
+
+/* === Hero heading: responsive font-size ============================
+   The template hardcodes 48-72px which doesn't shrink on phones (long
+   French/English strings overflow or break the hero layout). Use a single
+   clamp() that scales smoothly from mobile to desktop, plus tuned eyebrow
+   and CTA sizes for small viewports. */
+.hero-home-section h1,
+.content-hero-home h1 {
+  font-size: clamp(1.85rem, 6.2vw, 4.5rem) !important;
+  line-height: 1.05 !important;
+  letter-spacing: -0.015em;
+  word-break: normal;
+  overflow-wrap: anywhere;
+}
+.hero-home-section .heading-hero,
+.content-hero-home .heading-hero {
+  font-size: clamp(1.85rem, 6.2vw, 4.5rem) !important;
+  line-height: 1.05 !important;
+}
+
+@media (max-width: 767px) {
+  .hero-home-section h1,
+  .content-hero-home h1 { font-size: clamp(1.7rem, 7.8vw, 2.4rem) !important; }
+  .hero-home-section .label-small,
+  .hero-home-section .eyebrow {
+    font-size: 0.7rem !important;
+    letter-spacing: 0.12em;
+  }
+  .hero-home-section .cta-main,
+  .hero-home-section .cta-small {
+    font-size: 0.92rem !important;
+    padding: 0.7rem 1.1rem !important;
+  }
+  .content-hero-home {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+}
+@media (max-width: 480px) {
+  .hero-home-section h1,
+  .content-hero-home h1 { font-size: clamp(1.55rem, 8.4vw, 2rem) !important; }
+}
