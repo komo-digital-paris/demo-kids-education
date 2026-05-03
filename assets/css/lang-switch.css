@@ -289,6 +289,96 @@ html[lang="en"] [data-lang="en"] { display: inline !important; }
   }
 }
 
+/* === Programs / blog carousel arrows ============================
+   Webflow ships these arrows in markup with classes
+   `.slider-button.upper.prev.w-slider-arrow-left` (etc.) but in the
+   default theme they sit awkwardly at the top of the section and look
+   like nothing. Re-style them to match the testimonial arrows: a tight
+   pair centred just below the slider mask, with a 30px gap. We bind
+   clicks to them in lang-switch.js. */
+.blog-carousel-section .w-slider-nav { display: none !important; }
+.blog-carousel-section .slider.w-slider {
+  position: relative !important;
+  padding-bottom: 6rem !important;
+}
+.blog-carousel-section .w-slider-arrow-left,
+.blog-carousel-section .w-slider-arrow-right {
+  position: absolute !important;
+  inset: auto !important;
+  top: auto !important;
+  bottom: 0 !important;
+  left: 50% !important;
+  right: auto !important;
+  width: 48px !important;
+  height: 48px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: var(--lpt-surface) !important;
+  border: 1px solid rgba(26, 26, 26, .08) !important;
+  border-radius: 999px !important;
+  color: var(--lpt-text) !important;
+  box-shadow:
+    0 6px 18px -6px rgba(26, 26, 26, .18),
+    0 2px 4px -2px rgba(26, 26, 26, .06) !important;
+  opacity: 1 !important;
+  z-index: 10 !important;
+  cursor: pointer !important;
+  font-size: 16px !important;
+  transition: background-color .2s, color .2s, transform .2s, box-shadow .2s, border-color .2s !important;
+}
+.blog-carousel-section .w-slider-arrow-left {
+  transform: translateX(calc(-100% - 15px)) !important;
+}
+.blog-carousel-section .w-slider-arrow-right {
+  transform: translateX(15px) !important;
+}
+.blog-carousel-section .w-slider-arrow-left:hover {
+  background: var(--lpt-text) !important; color: #fff !important;
+  transform: translateX(calc(-100% - 15px)) translateY(-2px) !important;
+}
+.blog-carousel-section .w-slider-arrow-right:hover {
+  background: var(--lpt-text) !important; color: #fff !important;
+  transform: translateX(15px) translateY(-2px) !important;
+}
+.blog-carousel-section .w-slider-arrow-left .icon-slider-button.large,
+.blog-carousel-section .w-slider-arrow-right .icon-slider-button.large {
+  display: flex !important; width: 100% !important; height: 100% !important;
+  align-items: center; justify-content: center; color: inherit;
+}
+.blog-carousel-section .w-slider-arrow-left .icon-slider-button.small,
+.blog-carousel-section .w-slider-arrow-right .icon-slider-button.small {
+  display: none !important;
+}
+.blog-carousel-section .w-slider-arrow-left svg,
+.blog-carousel-section .w-slider-arrow-right svg {
+  width: 18px !important; height: 18px !important;
+  stroke: currentColor; fill: currentColor;
+}
+
+/* Program card title: prepend the country flag / activity icon. The SVG
+   wrapper is a 28×20 rounded rect that sits inline with the title. */
+.program-flag,
+.program-icon {
+  display: inline-flex;
+  align-items: center;
+  vertical-align: middle;
+  margin-right: .55rem;
+  width: 28px; height: 20px;
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: 0 0 0 1px rgba(26, 26, 26, .08);
+  flex-shrink: 0;
+}
+.program-flag svg,
+.program-icon svg { display: block; width: 100%; height: 100%; }
+.name-wrap-program-card .text-h4 {
+  display: flex; align-items: center; gap: 0;
+  flex-wrap: wrap;
+}
+
 /* === Home: Summer camps highlight section === */
 .home-camps-section {
   padding: 8rem 1.5rem;
@@ -537,7 +627,8 @@ html[lang="en"] [data-lang="en"] { display: inline !important; }
    transparent inside, but the section box itself needs an opaque bg. */
 .section.trust-band { background-color: var(--lpt-bg); }
 /* The finder uses the same cream bg already. */
-.section.finder-section { background-color: var(--lpt-bg); }
+/* finder-section background-color is set further down via the warm-tan
+   gradient (deliberately darker than var(--lpt-bg)); don't touch it here. */
 /* Features and philosophy sections often have their own bg from Webflow —
    ensure they also stack above the hero. */
 .section.features-section,
@@ -692,11 +783,16 @@ html[lang="en"] [data-lang="en"] { display: inline !important; }
 .section.trust-band + .section { border-radius: 0; }
 
 /* === Class finder quiz — visually elevated === */
+.section.finder-section,
 .finder-section {
   padding: 9rem 1.5rem 10rem;
+  /* Visibly deeper warm tan than the surrounding cream — the finder block
+     is the page's main "stop and choose" moment so it should pop against
+     the surrounding sections. !important needed because earlier global
+     `.section:not(.hero-home-section)` rules try to force --lpt-bg. */
   background:
-    radial-gradient(1200px 600px at 50% 0%, var(--lpt-bg-tint) 0%, transparent 70%),
-    linear-gradient(180deg, var(--lpt-bg) 0%, var(--lpt-bg-warm) 100%);
+    radial-gradient(1200px 600px at 50% 0%, #f6e3c0 0%, transparent 70%),
+    linear-gradient(180deg, #f0e3c4 0%, #e6d5ad 100%) !important;
   position: relative;
   overflow: hidden;
 }

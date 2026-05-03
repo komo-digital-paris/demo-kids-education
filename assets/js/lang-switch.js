@@ -189,11 +189,27 @@
    icon wrapper, the SVG, or the path. Capture phase + stopImmediate-
    Propagation ensures our handler is the SOLE responder. */
 (function(){
-  var SLIDER_SEL = '.testimonial-home-section .slider.w-slider';
-  var ARROW_SEL  = '.testimonial-home-section .w-slider-arrow-left, '
-                 + '.testimonial-home-section .w-slider-arrow-right';
+  // Two manually-controlled sliders on the home page: testimonials and the
+  // programs/blog carousel. Both use Webflow's slider chrome (.w-slide,
+  // .w-slider-arrow-*), only their containers differ. The handler picks the
+  // right slider from `arrow.closest('.w-slider')`.
+  var ARROW_SEL = [
+    '.testimonial-home-section .w-slider-arrow-left',
+    '.testimonial-home-section .w-slider-arrow-right',
+    '.blog-carousel-section .w-slider-arrow-left',
+    '.blog-carousel-section .w-slider-arrow-right'
+  ].join(', ');
+  var SLIDER_SELECTORS = [
+    '.testimonial-home-section .slider.w-slider',
+    '.blog-carousel-section .slider.w-slider'
+  ];
+  // Whether non-active slides should be dimmed for visual hierarchy. Used on
+  // the testimonial slider (one card "in focus", others peek) but NOT on the
+  // programs carousel where every card is a real offer the user might pick.
+  function shouldDim(slider){
+    return slider.closest('.testimonial-home-section') != null;
+  }
 
-  function getSlider(){ return document.querySelector(SLIDER_SEL); }
   function getSlides(slider){ return Array.from(slider.querySelectorAll('.w-slide')); }
   function getCurrentIdx(slides){
     for (var i = 0; i < slides.length; i++) {
@@ -212,8 +228,7 @@
     if (slides.length < 2) return slides[0].getBoundingClientRect().width;
     return slides[1].offsetLeft - slides[0].offsetLeft;
   }
-  function advance(direction){
-    var slider = getSlider();
+  function advance(slider, direction){
     if (!slider) { console.warn('[LPT carousel] no slider'); return; }
     var slides = getSlides(slider);
     if (!slides.length) { console.warn('[LPT carousel] no slides'); return; }
@@ -221,6 +236,7 @@
     var current = getCurrentIdx(slides);
     var next = (current + direction + n) % n;
     var pitch = getPitch(slides);
+    var dim = shouldDim(slider);
     // To bring slide `next` into the active spot we shift the whole strip
     // left by next*pitch — one transform value applied to every slide.
     var shift = -next * pitch;
@@ -228,13 +244,13 @@
       var isCur = i === next;
       s.style.transition = 'transform 600ms cubic-bezier(.645,.045,.355,1), opacity 400ms ease';
       s.style.transform = 'translateX(' + shift + 'px)';
-      // Active slide pops to full white card; the peeking ones fade so the
-      // user immediately knows which one is "current".
-      s.style.opacity = isCur ? '1' : '0.32';
+      // Testimonial slider dims peeks; programs slider keeps everyone full.
+      s.style.opacity = (dim && !isCur) ? '0.32' : '1';
       s.setAttribute('aria-hidden', isCur ? 'false' : 'true');
       s.classList.toggle('w--current', isCur);
     });
-    console.log('[LPT carousel] advance', direction, '→ slide', next + 1, '/', n);
+    console.log('[LPT carousel] advance', direction, '→ slide', next + 1, '/', n,
+                '(' + (slider.closest('.section') ? slider.closest('.section').className.split(' ')[1] : '?') + ')');
   }
 
   // WINDOW-level capture-phase delegation. Webflow's slider script binds a
@@ -247,8 +263,9 @@
     if (!arrow) return;
     e.preventDefault();
     e.stopImmediatePropagation();
+    var slider = arrow.closest('.w-slider');
     var dir = arrow.classList.contains('w-slider-arrow-right') ? 1 : -1;
-    advance(dir);
+    advance(slider, dir);
   }, true);
 
   // Keyboard support — when arrow is focused, Enter / Space advances.
@@ -258,15 +275,15 @@
     if (!arrow) return;
     if (e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar') {
       e.preventDefault();
+      var slider = arrow.closest('.w-slider');
       var dir = arrow.classList.contains('w-slider-arrow-right') ? 1 : -1;
-      advance(dir);
+      advance(slider, dir);
     }
   });
 
-  // Initialise the first slide so the styles + transforms are correct
-  // even before the user touches anything.
-  function initFirstSlide(){
-    var slider = getSlider();
+  // Initialise the first slide of EACH controlled slider so the styles +
+  // transforms are correct even before the user touches anything.
+  function initOne(slider){
     if (!slider) return false;
     var slides = getSlides(slider);
     if (!slides.length) return false;
@@ -276,9 +293,17 @@
     }
     var pitch = getPitch(slides);
     var shift = -current * pitch;
+    var dim = shouldDim(slider);
     slides.forEach(function(s, i){
       s.style.transform = 'translateX(' + shift + 'px)';
-      s.style.opacity = i === current ? '1' : '0.32';
+      s.style.opacity = (dim && i !== current) ? '0.32' : '1';
+    });
+    return true;
+  }
+  function initFirstSlide(){
+    SLIDER_SELECTORS.forEach(function(sel){
+      var slider = document.querySelector(sel);
+      if (slider) initOne(slider);
     });
     return true;
   }
