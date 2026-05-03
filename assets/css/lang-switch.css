@@ -626,6 +626,16 @@ html[lang="en"] [data-lang="en"] { display: inline !important; }
 /* === Stacking-scroll effect: hero scrolls a bit, then pins when the next section
        reaches the middle of the viewport, then the next section slides over it === */
 .section.hero-home-section {
+  /* Lock the hero to exactly one viewport tall on every device — the
+     stacking-scroll only "feels right" when the pinned hero fills the
+     screen edge-to-edge. min-height (not height) so internal content
+     can still expand it on very tall ZH/EN strings if it ever needs to. */
+  min-height: 100vh;
+  /* Use 100dvh on supported browsers — accounts for the iOS dynamic
+     toolbar so the hero is always exactly the visible viewport. */
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
   position: sticky;
   /* Negative top = how far the hero is allowed to scroll up before being pinned.
      With ~50vh of negative offset, the hero scrolls naturally for ~half a viewport,
@@ -633,6 +643,14 @@ html[lang="en"] [data-lang="en"] { display: inline !important; }
      of the screen — that's exactly where it gets pinned. */
   top: -50vh;
   z-index: 1;
+}
+/* The video-hero-home wrapper is the actual content of the hero. Make sure
+   it fills the locked-100vh section height, so the video covers the screen
+   edge-to-edge while the user scrolls. */
+.section.hero-home-section .video-hero-home {
+  flex: 1 1 auto;
+  min-height: 100vh;
+  min-height: 100dvh;
 }
 
 /* === Hero peek-fix: force opaque background on every section, footer block,
