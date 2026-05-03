@@ -315,3 +315,42 @@
   window.addEventListener('load',   initFirstSlide);
   window.addEventListener('resize', initFirstSlide);
 })();
+
+/* ============================================================
+   Finder section — scroll-in entrance.
+   Adds `.is-in-view` to .finder-section when it crosses the viewport,
+   so the staggered CSS transitions defined in lang-switch.css fire.
+   Only fires once (we unobserve on the first hit) so the eyebrow / h2
+   / sub / card don't re-replay every time the user scrolls past.
+   ============================================================ */
+(function() {
+  function init() {
+    var finder = document.querySelector('.finder-section');
+    if (!finder) return;
+    // Older browsers without IO: just show the content, no animation.
+    if (!('IntersectionObserver' in window)) {
+      finder.classList.add('is-in-view');
+      return;
+    }
+    var io = new IntersectionObserver(function(entries) {
+      entries.forEach(function(e) {
+        if (e.isIntersecting) {
+          finder.classList.add('is-in-view');
+          io.unobserve(finder);
+        }
+      });
+    }, {
+      // Trigger when ~22% of the section is past the bottom edge — feels
+      // like a deliberate reveal, not "as soon as the very first pixel
+      // peeks". Adjust if it feels too late.
+      rootMargin: '0px 0px -22% 0px',
+      threshold: 0
+    });
+    io.observe(finder);
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();

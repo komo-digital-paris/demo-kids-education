@@ -956,6 +956,80 @@ html[lang="en"] [data-lang="en"] { display: inline !important; }
 .finder-step.is-active { display: flex; flex-direction: column; }
 @keyframes finderIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
 
+/* === Scroll-in entrance animation =================================
+   The finder is the page's main "stop and choose" block — make it feel
+   alive when the user scrolls down to it. IntersectionObserver in
+   lang-switch.js toggles `.is-in-view` on the section the moment it
+   crosses the viewport edge; the rules below cascade the children with
+   a small stagger so the eyebrow, the title, the subtitle and the card
+   land one after the other.
+
+   Resting state: every animated child is offset / faded out. We rely on
+   `transition` + adding `.is-in-view` to swap them back to natural —
+   keyframes would replay every time the user scrolls past, transitions
+   only fire once per state flip.
+*/
+.finder-section .finder-eyebrow,
+.finder-section .finder-h2,
+.finder-section .finder-sub,
+.finder-section .finder-card {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity .7s cubic-bezier(.22, .9, .3, 1),
+    transform .7s cubic-bezier(.22, .9, .3, 1),
+    box-shadow .9s ease;
+  will-change: transform, opacity;
+}
+.finder-section .finder-eyebrow { transition-delay: .05s; transform: translateY(-12px); }
+.finder-section .finder-h2     { transition-delay: .15s; }
+.finder-section .finder-sub    { transition-delay: .28s; }
+.finder-section .finder-card   { transition-delay: .42s; transform: translateY(40px) scale(.97); }
+
+.finder-section.is-in-view .finder-eyebrow,
+.finder-section.is-in-view .finder-h2,
+.finder-section.is-in-view .finder-sub {
+  opacity: 1;
+  transform: translateY(0);
+}
+.finder-section.is-in-view .finder-card {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  /* Gentle attention pulse: the card lands with an extra-deep shadow,
+     then settles back over 1.2s. Pure CSS, fires only on the in-view
+     transition because we keyframe on the .is-in-view class. */
+  animation: finderCardLand 1.4s cubic-bezier(.22, .9, .3, 1) .42s both;
+}
+@keyframes finderCardLand {
+  0%   {
+    box-shadow:
+      0 1px 0 rgba(255,255,255,.7) inset,
+      0 0 0 0 rgba(42, 24, 16, 0),
+      0 0 0 0 rgba(42, 24, 16, 0);
+  }
+  35%  {
+    box-shadow:
+      0 1px 0 rgba(255,255,255,.7) inset,
+      0 70px 110px -40px rgba(42, 24, 16, .35),
+      0 30px 60px -20px rgba(42, 24, 16, .20);
+  }
+  100% {
+    box-shadow:
+      0 1px 0 rgba(255,255,255,.7) inset,
+      0 50px 100px -30px rgba(42, 24, 16, .25),
+      0 20px 40px -20px rgba(42, 24, 16, .15);
+  }
+}
+/* Respect users who turn animations off — no slide, no pulse. */
+@media (prefers-reduced-motion: reduce) {
+  .finder-section .finder-eyebrow,
+  .finder-section .finder-h2,
+  .finder-section .finder-sub,
+  .finder-section .finder-card {
+    opacity: 1; transform: none; transition: none; animation: none;
+  }
+}
+
 .finder-q {
   font-size: 1.45rem;
   font-weight: 700;
