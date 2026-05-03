@@ -1399,3 +1399,19 @@ img, video, svg { max-width: 100%; }
   .hero-home-section h1,
   .content-hero-home h1 { font-size: clamp(1.55rem, 8.4vw, 2rem) !important; }
 }
+
+/* About-home block: the FR translation is much longer than ZH/EN, so the
+   default `.text-h4` size leaves it visually thin. Bump it specifically
+   for the French run (only renders inside the html[lang="fr"] view) and
+   tighten the line-height so the longer phrase stays compact. */
+html[lang="fr"] .wrap-about-home h2.text-h4 {
+  font-size: clamp(1.65rem, 3.6vw, 2.6rem) !important;
+  line-height: 1.12 !important;
+  letter-spacing: -.01em;
+}
+@media (max-width: 767px) {
+  html[lang="fr"] .wrap-about-home h2.text-h4 {
+    font-size: clamp(1.45rem, 5.2vw, 2rem) !important;
+    line-height: 1.18 !important;
+  }
+}
