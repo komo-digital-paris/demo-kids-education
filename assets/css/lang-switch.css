@@ -738,15 +738,47 @@ html[lang="en"] [data-lang="en"] { display: inline !important; }
 .section.blog-carousel-section,
 .section.faq-section { z-index: 2; position: relative; }
 
-/* Stats numbers pop in brand red — same trick the real LPT site uses
-   on "7年 / 25名 / 160+ / 1 000+" so the numbers read as headline first. */
-.section.stats-section .stat-count h3,
-.section.stats-section .text-h2 {
+/* Stats section: video edge-to-edge. The template's `.section`
+   default has 16px horizontal padding on mobile (and similar on
+   desktop) — kill it on the stats block specifically so the
+   .video-stats wrapper covers the full viewport width. */
+.section.stats-section {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+.section.stats-section .video-stats {
+  width: 100% !important;
+  max-width: 100% !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  border-radius: 0 !important;
+}
+
+/* Stats: each number painted in a different brand colour, rotating
+   through the LPT palette (red → blue → yellow → orange). The section
+   sits over a dark video, so the labels go pure white. Bigger pop,
+   playful, and the whole row reads as a brand statement. */
+.section.stats-section .stat-item:nth-child(1) .stat-count h3,
+.section.stats-section .stat-item:nth-child(1) .stat-count .text-h2 {
   color: var(--lpt-red) !important;
 }
+.section.stats-section .stat-item:nth-child(2) .stat-count h3,
+.section.stats-section .stat-item:nth-child(2) .stat-count .text-h2 {
+  color: var(--lpt-blue) !important;
+}
+.section.stats-section .stat-item:nth-child(3) .stat-count h3,
+.section.stats-section .stat-item:nth-child(3) .stat-count .text-h2 {
+  color: var(--lpt-yellow) !important;
+}
+.section.stats-section .stat-item:nth-child(4) .stat-count h3,
+.section.stats-section .stat-item:nth-child(4) .stat-count .text-h2 {
+  color: var(--lpt-primary) !important;
+}
+/* Labels (Élèves/an, Enseignants, …) sit on the dark video — pure white. */
 .section.stats-section .stat-item > div:not(.stat-count) {
-  color: var(--lpt-text);
-  opacity: .85;
+  color: #fff !important;
+  opacity: 1 !important;
+  font-weight: 500;
 }
 
 /* Star Students page */
