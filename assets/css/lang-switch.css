@@ -1,19 +1,25 @@
 /* === LPT brand palette ===========================================
+   Mirrors the actual lespetitstrilingues.com look: white background,
+   near-black text, golden orange CTA, plus three brand-blob accents
+   (yellow top-right, blue mid-left, red bottom-left).
    Tokens used everywhere by my custom CSS, plus overrides for the
    Webflow-generated tokens so the entire template inherits the new
    colours (CTAs, headings, sections, etc.). */
 :root {
-  --lpt-primary:        #ff6b35;   /* warm orange — main CTA */
-  --lpt-primary-dark:   #e55222;   /* hover state */
-  --lpt-secondary:      #1abc9c;   /* fresh teal — secondary accents */
-  --lpt-text:           #2a1810;   /* warm dark brown */
-  --lpt-text-muted:     rgba(42, 24, 16, .65);
-  --lpt-text-soft:      rgba(42, 24, 16, .18);
-  --lpt-bg:             #faf6ed;   /* page background */
-  --lpt-bg-warm:        #f7f1e7;   /* slightly warmer cream for blocks */
-  --lpt-bg-tint:        #ffe9d4;   /* radial-gradient highlight */
+  --lpt-primary:        #f5a623;   /* golden orange — main CTA */
+  --lpt-primary-dark:   #d8901a;   /* hover state */
+  --lpt-secondary:      #d62828;   /* brand red — accents on stats / 中英法 */
+  --lpt-yellow:         #f5b942;   /* warm yellow blob (top-right) */
+  --lpt-blue:           #4a90c2;   /* brand blue blob (mid-left) + logo tree */
+  --lpt-red:            #d62828;   /* brand red blob (bottom-left wave) */
+  --lpt-text:           #1a1a1a;   /* near-black */
+  --lpt-text-muted:     rgba(26, 26, 26, .65);
+  --lpt-text-soft:      rgba(26, 26, 26, .18);
+  --lpt-bg:             #ffffff;   /* page background — pure white */
+  --lpt-bg-warm:        #fafafa;   /* faint off-white for cards / sections */
+  --lpt-bg-tint:        rgba(245, 166, 35, .08); /* radial highlight */
   --lpt-surface:        #ffffff;
-  --lpt-border:         rgba(42, 24, 16, .08);
+  --lpt-border:         rgba(26, 26, 26, .08);
 }
 
 /* Override Webflow's design tokens so the rest of the template
@@ -104,9 +110,9 @@ html[lang="en"] [data-lang="en"] { display: inline !important; }
   margin-right: auto !important;
   padding: 0.5rem 1.25rem !important;
   box-shadow:
-    0 6px 24px -10px rgba(42, 24, 16, .18),
-    0 2px 8px -4px rgba(42, 24, 16, .08);
-  border: 1px solid rgba(42, 24, 16, .04);
+    0 6px 24px -10px rgba(26, 26, 26, .18),
+    0 2px 8px -4px rgba(26, 26, 26, .08);
+  border: 1px solid rgba(26, 26, 26, .04);
 }
 .nav-container {
   width: auto !important;
@@ -119,8 +125,8 @@ html[lang="en"] [data-lang="en"] { display: inline !important; }
 .teachers-intro h2, .teachers-h1 { font-size: clamp(2.5rem, 5vw, 3.5rem); font-weight: 700; line-height: 1.05; margin: 0 0 1.5rem; }
 .teachers-intro p  { font-size: 1.05rem; line-height: 1.55; opacity: .78; margin: 0; }
 .teachers-pillars { list-style: none; padding: 0; margin: 0 0 1.5rem; display: flex; flex-wrap: wrap; gap: .6rem; justify-content: center; }
-.teachers-pillars li { background: #f3ede4; border-radius: 999px; padding: .45rem 1rem; font-size: .95rem; line-height: 1.2; }
-.teachers-price { display: inline-block; background: #ff6b35; color: #fff; padding: .5rem 1.1rem; border-radius: 999px; font-weight: 600; font-size: 1rem; }
+.teachers-pillars li { background: #f4f4f4; border-radius: 999px; padding: .45rem 1rem; font-size: .95rem; line-height: 1.2; }
+.teachers-price { display: inline-block; background: #f5a623; color: #fff; padding: .5rem 1.1rem; border-radius: 999px; font-weight: 600; font-size: 1rem; }
 .teachers-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
@@ -128,7 +134,7 @@ html[lang="en"] [data-lang="en"] { display: inline !important; }
 }
 .teacher-card {
   display: flex; flex-direction: column;
-  background: #f3ede4;
+  background: #f4f4f4;
   border-radius: 1.25rem;
   padding: 1.5rem;
   transition: transform .25s ease, box-shadow .25s ease;
@@ -138,7 +144,7 @@ html[lang="en"] [data-lang="en"] { display: inline !important; }
   width: 100%; aspect-ratio: 4 / 3; object-fit: cover; object-position: center top;
   border-radius: .75rem;
   margin-bottom: 1.25rem;
-  background: #e8dfd1;
+  background: #e8e8e8;
 }
 .teacher-name { margin: 0 0 .75rem; font-weight: 700; font-size: 1.35rem; line-height: 1.2; }
 .teacher-bio  { font-size: .92rem; line-height: 1.55; opacity: .82; margin: 0; }
@@ -204,12 +210,12 @@ html[lang="en"] [data-lang="en"] { display: inline !important; }
   align-items: center !important;
   justify-content: center !important;
   background: var(--lpt-surface) !important;
-  border: 1px solid rgba(42, 24, 16, .08) !important;
+  border: 1px solid rgba(26, 26, 26, .08) !important;
   border-radius: 999px !important;
   color: var(--lpt-text) !important;
   box-shadow:
-    0 6px 18px -6px rgba(42, 24, 16, .18),
-    0 2px 4px -2px rgba(42, 24, 16, .06) !important;
+    0 6px 18px -6px rgba(26, 26, 26, .18),
+    0 2px 4px -2px rgba(26, 26, 26, .06) !important;
   opacity: 1 !important;
   z-index: 10 !important;
   cursor: pointer !important;
@@ -229,14 +235,14 @@ html[lang="en"] [data-lang="en"] { display: inline !important; }
   color: #fff !important;
   border-color: var(--lpt-text) !important;
   transform: translateX(calc(-100% - 15px)) translateY(-2px) !important;
-  box-shadow: 0 14px 28px -8px rgba(42, 24, 16, .28) !important;
+  box-shadow: 0 14px 28px -8px rgba(26, 26, 26, .28) !important;
 }
 .testimonial-home-section .w-slider-arrow-right:hover {
   background: var(--lpt-text) !important;
   color: #fff !important;
   border-color: var(--lpt-text) !important;
   transform: translateX(15px) translateY(-2px) !important;
-  box-shadow: 0 14px 28px -8px rgba(42, 24, 16, .28) !important;
+  box-shadow: 0 14px 28px -8px rgba(26, 26, 26, .28) !important;
 }
 /* Inner icon: keep the template's "large" variant visible at full button size,
    hide the "small" variant. Force SVG to a clean 18px size with brand colour.
@@ -413,12 +419,12 @@ html[lang="en"] [data-lang="en"] { display: inline !important; }
 .camp-card {
   background: var(--lpt-surface); border-radius: 1.5rem; overflow: hidden;
   display: flex; flex-direction: column;
-  box-shadow: 0 20px 50px -25px rgba(42, 24, 16, .15);
+  box-shadow: 0 20px 50px -25px rgba(26, 26, 26, .15);
   transition: transform .25s ease, box-shadow .25s ease;
 }
 .camp-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 30px 70px -25px rgba(42, 24, 16, .25);
+  box-shadow: 0 30px 70px -25px rgba(26, 26, 26, .25);
 }
 .camp-photo-wrap {
   position: relative; width: 100%; aspect-ratio: 16 / 9;
@@ -489,7 +495,7 @@ html[lang="en"] [data-lang="en"] { display: inline !important; }
 
 /* === Karaoke text effect: characters light up as user scrolls through === */
 [data-karaoke] {
-  color: rgba(42, 24, 16, .18);
+  color: rgba(26, 26, 26, .18);
   /* Allow wrapping mid-word for CJK (no spaces) and at spaces for latin scripts. */
   overflow-wrap: anywhere;
   word-break: normal;
@@ -498,7 +504,7 @@ html[lang="en"] [data-lang="en"] { display: inline !important; }
   margin-right: auto;
 }
 [data-karaoke] .karaoke-char {
-  color: rgba(42, 24, 16, .18);
+  color: rgba(26, 26, 26, .18);
   transition: color .25s cubic-bezier(.2,.8,.2,1);
 }
 [data-karaoke] .karaoke-char.is-lit { color: var(--lpt-text); }
@@ -554,7 +560,7 @@ html[lang="en"] [data-lang="en"] { display: inline !important; }
 .students-h1   { font-size: clamp(2.5rem, 6vw, 4rem); font-weight: 700; line-height: 1.05; margin: 0 0 1.5rem; }
 .students-pillars { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: .75rem; justify-content: center; }
 .students-pillars li {
-  background: #f3ede4; border-radius: 999px; padding: .5rem 1.1rem;
+  background: #f4f4f4; border-radius: 999px; padding: .5rem 1.1rem;
   font-size: .95rem; line-height: 1.2;
 }
 .students-grid {
@@ -566,7 +572,7 @@ html[lang="en"] [data-lang="en"] { display: inline !important; }
 .student-card { display: flex; flex-direction: column; }
 .student-photo {
   width: 100%; aspect-ratio: 1 / 1; object-fit: cover; object-position: center top;
-  border-radius: .9rem; background: #f3ede4;
+  border-radius: .9rem; background: #f4f4f4;
 }
 .student-name { margin-top: .8rem; font-size: .95rem; font-weight: 600; text-align: center; }
 
@@ -579,7 +585,7 @@ html[lang="en"] [data-lang="en"] { display: inline !important; }
 }
 .work-photo {
   width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: .75rem;
-  background: #f3ede4;
+  background: #f4f4f4;
 }
 
 @media (max-width: 640px) {
@@ -609,7 +615,7 @@ html[lang="en"] [data-lang="en"] { display: inline !important; }
 }
 .lang-nudge-btn.primary { background: var(--lpt-surface); color: #1a1a1a; font-weight: 600; }
 .lang-nudge-btn:hover { background: rgba(255,255,255,.22); }
-.lang-nudge-btn.primary:hover { background: #f5e9d8; }
+.lang-nudge-btn.primary:hover { background: #fde6c5; }
 
 /* === Trust band — emerging card with rounded top corners === */
 .section.trust-band {
@@ -704,8 +710,8 @@ html[lang="en"] [data-lang="en"] { display: inline !important; }
 .finder-section::before {
   content: ''; position: absolute; inset: 0;
   background-image:
-    radial-gradient(circle at 15% 20%, rgba(42, 24, 16, .04) 1px, transparent 1.5px),
-    radial-gradient(circle at 85% 75%, rgba(42, 24, 16, .04) 1px, transparent 1.5px);
+    radial-gradient(circle at 15% 20%, rgba(26, 26, 26, .04) 1px, transparent 1.5px),
+    radial-gradient(circle at 85% 75%, rgba(26, 26, 26, .04) 1px, transparent 1.5px);
   background-size: 32px 32px;
   pointer-events: none;
   z-index: 0;
@@ -715,7 +721,7 @@ html[lang="en"] [data-lang="en"] { display: inline !important; }
 .finder-eyebrow {
   display: inline-block;
   background: var(--lpt-surface);
-  border: 1px solid rgba(42, 24, 16, .1);
+  border: 1px solid rgba(26, 26, 26, .1);
   color: var(--lpt-text);
   padding: .45rem 1rem;
   border-radius: 999px;
@@ -747,8 +753,8 @@ html[lang="en"] [data-lang="en"] { display: inline !important; }
   padding: 3.5rem 3rem;
   box-shadow:
     0 1px 0 rgba(255,255,255,.7) inset,
-    0 50px 100px -30px rgba(42, 24, 16, .25),
-    0 20px 40px -20px rgba(42, 24, 16, .15);
+    0 50px 100px -30px rgba(26, 26, 26, .25),
+    0 20px 40px -20px rgba(26, 26, 26, .15);
   text-align: left;
   position: relative;
   overflow: hidden;
@@ -772,7 +778,7 @@ html[lang="en"] [data-lang="en"] { display: inline !important; }
   width: 28px;
   height: 4px;
   border-radius: 999px;
-  background: rgba(42, 24, 16, .12);
+  background: rgba(26, 26, 26, .12);
   transition: background-color .35s ease, width .35s ease;
 }
 .finder-dot.is-active { background: var(--lpt-text); width: 48px; }
@@ -797,7 +803,7 @@ html[lang="en"] [data-lang="en"] { display: inline !important; }
   gap: .75rem;
 }
 .finder-opt {
-  border: 1.5px solid rgba(42, 24, 16, .12);
+  border: 1.5px solid rgba(26, 26, 26, .12);
   background: var(--lpt-surface);
   border-radius: 1rem;
   padding: 1.1rem 1.25rem;
