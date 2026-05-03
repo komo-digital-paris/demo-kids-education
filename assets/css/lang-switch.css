@@ -681,12 +681,18 @@ html[lang="en"] [data-lang="en"] { display: inline !important; }
   display: flex;
   flex-direction: column;
   position: sticky;
-  /* Negative top = how far the hero is allowed to scroll up before being pinned.
-     With ~50vh of negative offset, the hero scrolls naturally for ~half a viewport,
-     by which point the trust band (which sits right below) has reached the middle
-     of the screen — that's exactly where it gets pinned. */
+  /* Desktop: ~50vh of natural scroll before the hero pins, so the user
+     gets a feel of motion before the stacking takes over. On mobile we
+     override this further down — see the breakpoint below. */
   top: -50vh;
   z-index: 1;
+}
+/* Mobile: skip the 50vh pre-scroll. Pin the hero at top: 0 so the
+   trust-band starts climbing over it the very first pixel of scroll.
+   Mobile screens are short — waiting half a viewport before any
+   visual change felt sluggish. */
+@media (max-width: 767px) {
+  .section.hero-home-section { top: 0 !important; }
 }
 /* The video-hero-home wrapper is the actual content of the hero. Make sure
    it fills the locked-100vh section height, so the video covers the screen
