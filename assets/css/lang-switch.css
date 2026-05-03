@@ -202,16 +202,16 @@ html[lang="en"] [data-lang="en"] { display: inline !important; }
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
-  /* Branded look: white pill with orange chevron + subtle orange ring.
-     Plain white buttons looked like decorative dots and gave no visual cue
-     they were tappable, especially on mobile (no :hover). */
+  /* Clean white pill, no border. Brand identity comes from the orange
+     chevron + a soft orange-tinted shadow underneath. Hover/press inverts
+     to solid orange so every device gets clear feedback. */
   background: var(--lpt-surface) !important;
-  border: 1.5px solid var(--lpt-primary) !important;
+  border: 0 !important;
   border-radius: 999px !important;
   color: var(--lpt-primary) !important;
   box-shadow:
-    0 6px 18px -6px rgba(245, 166, 35, .35),
-    0 2px 4px -2px rgba(42, 24, 16, .08) !important;
+    0 8px 22px -8px rgba(245, 166, 35, .28),
+    0 2px 6px -2px rgba(42, 24, 16, .12) !important;
   opacity: 1 !important;
   z-index: 10 !important;
   cursor: pointer !important;
@@ -331,12 +331,12 @@ html[lang="en"] [data-lang="en"] { display: inline !important; }
   align-items: center !important;
   justify-content: center !important;
   background: var(--lpt-surface) !important;
-  border: 1.5px solid var(--lpt-primary) !important;
+  border: 0 !important;
   border-radius: 999px !important;
   color: var(--lpt-primary) !important;
   box-shadow:
-    0 6px 18px -6px rgba(245, 166, 35, .35),
-    0 2px 4px -2px rgba(26, 26, 26, .08) !important;
+    0 8px 22px -8px rgba(245, 166, 35, .28),
+    0 2px 6px -2px rgba(26, 26, 26, .12) !important;
   opacity: 1 !important;
   z-index: 10 !important;
   cursor: pointer !important;
