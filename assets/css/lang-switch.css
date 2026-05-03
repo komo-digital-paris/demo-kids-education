@@ -202,19 +202,23 @@ html[lang="en"] [data-lang="en"] { display: inline !important; }
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
+  /* Branded look: white pill with orange chevron + subtle orange ring.
+     Plain white buttons looked like decorative dots and gave no visual cue
+     they were tappable, especially on mobile (no :hover). */
   background: var(--lpt-surface) !important;
-  border: 1px solid rgba(42, 24, 16, .08) !important;
+  border: 1.5px solid var(--lpt-primary) !important;
   border-radius: 999px !important;
-  color: var(--lpt-text) !important;
+  color: var(--lpt-primary) !important;
   box-shadow:
-    0 6px 18px -6px rgba(42, 24, 16, .18),
-    0 2px 4px -2px rgba(42, 24, 16, .06) !important;
+    0 6px 18px -6px rgba(245, 166, 35, .35),
+    0 2px 4px -2px rgba(42, 24, 16, .08) !important;
   opacity: 1 !important;
   z-index: 10 !important;
   cursor: pointer !important;
   font-size: 16px !important;
-  transition: background-color .2s, color .2s, transform .2s, box-shadow .2s,
-              border-color .2s !important;
+  transition: background-color .15s, color .15s, transform .15s, box-shadow .15s,
+              border-color .15s !important;
+  -webkit-tap-highlight-color: transparent;
 }
 /* Each arrow shifted ±(width + 15px) from horizontal centre → 30px gap between */
 .testimonial-home-section .w-slider-arrow-left {
@@ -223,19 +227,29 @@ html[lang="en"] [data-lang="en"] { display: inline !important; }
 .testimonial-home-section .w-slider-arrow-right {
   transform: translateX(15px) !important;
 }
-.testimonial-home-section .w-slider-arrow-left:hover {
-  background: var(--lpt-text) !important;
+/* Hover (desktop) AND active/focus (touch + keyboard) — invert to brand
+   orange so every device gets clear feedback. */
+.testimonial-home-section .w-slider-arrow-left:hover,
+.testimonial-home-section .w-slider-arrow-left:active,
+.testimonial-home-section .w-slider-arrow-left:focus-visible {
+  background: var(--lpt-primary) !important;
   color: #fff !important;
-  border-color: var(--lpt-text) !important;
+  box-shadow: 0 12px 24px -8px rgba(245, 166, 35, .55) !important;
   transform: translateX(calc(-100% - 15px)) translateY(-2px) !important;
-  box-shadow: 0 14px 28px -8px rgba(42, 24, 16, .28) !important;
 }
-.testimonial-home-section .w-slider-arrow-right:hover {
-  background: var(--lpt-text) !important;
+.testimonial-home-section .w-slider-arrow-right:hover,
+.testimonial-home-section .w-slider-arrow-right:active,
+.testimonial-home-section .w-slider-arrow-right:focus-visible {
+  background: var(--lpt-primary) !important;
   color: #fff !important;
-  border-color: var(--lpt-text) !important;
+  box-shadow: 0 12px 24px -8px rgba(245, 166, 35, .55) !important;
   transform: translateX(15px) translateY(-2px) !important;
-  box-shadow: 0 14px 28px -8px rgba(42, 24, 16, .28) !important;
+}
+.testimonial-home-section .w-slider-arrow-left:active {
+  transform: translateX(calc(-100% - 15px)) scale(.94) !important;
+}
+.testimonial-home-section .w-slider-arrow-right:active {
+  transform: translateX(15px) scale(.94) !important;
 }
 /* Inner icon: keep the template's "large" variant visible at full button size,
    hide the "small" variant. Force SVG to a clean 18px size with brand colour.
@@ -317,17 +331,18 @@ html[lang="en"] [data-lang="en"] { display: inline !important; }
   align-items: center !important;
   justify-content: center !important;
   background: var(--lpt-surface) !important;
-  border: 1px solid rgba(26, 26, 26, .08) !important;
+  border: 1.5px solid var(--lpt-primary) !important;
   border-radius: 999px !important;
-  color: var(--lpt-text) !important;
+  color: var(--lpt-primary) !important;
   box-shadow:
-    0 6px 18px -6px rgba(26, 26, 26, .18),
-    0 2px 4px -2px rgba(26, 26, 26, .06) !important;
+    0 6px 18px -6px rgba(245, 166, 35, .35),
+    0 2px 4px -2px rgba(26, 26, 26, .08) !important;
   opacity: 1 !important;
   z-index: 10 !important;
   cursor: pointer !important;
   font-size: 16px !important;
-  transition: background-color .2s, color .2s, transform .2s, box-shadow .2s, border-color .2s !important;
+  transition: background-color .15s, color .15s, transform .15s, box-shadow .15s, border-color .15s !important;
+  -webkit-tap-highlight-color: transparent;
 }
 .blog-carousel-section .w-slider-arrow-left {
   transform: translateX(calc(-100% - 15px)) !important;
@@ -335,13 +350,25 @@ html[lang="en"] [data-lang="en"] { display: inline !important; }
 .blog-carousel-section .w-slider-arrow-right {
   transform: translateX(15px) !important;
 }
-.blog-carousel-section .w-slider-arrow-left:hover {
-  background: var(--lpt-text) !important; color: #fff !important;
+.blog-carousel-section .w-slider-arrow-left:hover,
+.blog-carousel-section .w-slider-arrow-left:active,
+.blog-carousel-section .w-slider-arrow-left:focus-visible {
+  background: var(--lpt-primary) !important; color: #fff !important;
+  box-shadow: 0 12px 24px -8px rgba(245, 166, 35, .55) !important;
   transform: translateX(calc(-100% - 15px)) translateY(-2px) !important;
 }
-.blog-carousel-section .w-slider-arrow-right:hover {
-  background: var(--lpt-text) !important; color: #fff !important;
+.blog-carousel-section .w-slider-arrow-right:hover,
+.blog-carousel-section .w-slider-arrow-right:active,
+.blog-carousel-section .w-slider-arrow-right:focus-visible {
+  background: var(--lpt-primary) !important; color: #fff !important;
+  box-shadow: 0 12px 24px -8px rgba(245, 166, 35, .55) !important;
   transform: translateX(15px) translateY(-2px) !important;
+}
+.blog-carousel-section .w-slider-arrow-left:active {
+  transform: translateX(calc(-100% - 15px)) scale(.94) !important;
+}
+.blog-carousel-section .w-slider-arrow-right:active {
+  transform: translateX(15px) scale(.94) !important;
 }
 .blog-carousel-section .w-slider-arrow-left .icon-slider-button.large,
 .blog-carousel-section .w-slider-arrow-right .icon-slider-button.large {
