@@ -1,19 +1,33 @@
 /* === LPT brand palette ===========================================
-   Tokens used everywhere by my custom CSS, plus overrides for the
-   Webflow-generated tokens so the entire template inherits the new
-   colours (CTAs, headings, sections, etc.). */
+   Mirrors lespetitstrilingues.com without going pure-white-stark.
+   Page background stays a barely-warm ivory (so the site keeps its
+   inviting, kids-school feel) but text moves to clean near-black for
+   readability, the CTA matches the brand's golden orange exactly, and
+   we add three "blob" accent tokens (yellow / blue / red) that I use
+   as decorative SVG shapes + stat highlights — same accents you see
+   on the real homepage. */
 :root {
-  --lpt-primary:        #ff6b35;   /* warm orange — main CTA */
-  --lpt-primary-dark:   #e55222;   /* hover state */
-  --lpt-secondary:      #1abc9c;   /* fresh teal — secondary accents */
-  --lpt-text:           #2a1810;   /* warm dark brown */
-  --lpt-text-muted:     rgba(42, 24, 16, .65);
-  --lpt-text-soft:      rgba(42, 24, 16, .18);
-  --lpt-bg:             #faf6ed;   /* page background */
-  --lpt-bg-warm:        #f7f1e7;   /* slightly warmer cream for blocks */
-  --lpt-bg-tint:        #ffe9d4;   /* radial-gradient highlight */
+  --lpt-primary:        #f5a623;   /* golden orange — main CTA */
+  --lpt-primary-dark:   #d8901a;   /* hover */
+  --lpt-secondary:      #d62828;   /* brand red — accents & stat numbers */
+
+  /* Brand-blob accents */
+  --lpt-yellow:         #f5b942;   /* warm golden yellow */
+  --lpt-blue:           #4a90c2;   /* friendly medium blue (logo tree) */
+  --lpt-red:            #d62828;   /* brand red */
+
+  /* Text — clean near-black for readability, no more warm-brown muddy */
+  --lpt-text:           #1a1a1a;
+  --lpt-text-muted:     rgba(26, 26, 26, .65);
+  --lpt-text-soft:      rgba(26, 26, 26, .18);
+
+  /* Background — warm ivory, NOT pure white. Subtle warmth so the
+     site still feels welcoming (avoids the corporate-stark trap). */
+  --lpt-bg:             #fdfaf3;
+  --lpt-bg-warm:        #faf5e8;
+  --lpt-bg-tint:        rgba(245, 185, 66, .12); /* yellow tint highlight */
   --lpt-surface:        #ffffff;
-  --lpt-border:         rgba(42, 24, 16, .08);
+  --lpt-border:         rgba(26, 26, 26, .08);
 }
 
 /* Override Webflow's design tokens so the rest of the template
@@ -104,9 +118,9 @@ html[lang="en"] [data-lang="en"] { display: inline !important; }
   margin-right: auto !important;
   padding: 0.5rem 1.25rem !important;
   box-shadow:
-    0 6px 24px -10px rgba(42, 24, 16, .18),
-    0 2px 8px -4px rgba(42, 24, 16, .08);
-  border: 1px solid rgba(42, 24, 16, .04);
+    0 6px 24px -10px rgba(26, 26, 26, .18),
+    0 2px 8px -4px rgba(26, 26, 26, .08);
+  border: 1px solid rgba(26, 26, 26, .04);
 }
 .nav-container {
   width: auto !important;
@@ -119,8 +133,8 @@ html[lang="en"] [data-lang="en"] { display: inline !important; }
 .teachers-intro h2, .teachers-h1 { font-size: clamp(2.5rem, 5vw, 3.5rem); font-weight: 700; line-height: 1.05; margin: 0 0 1.5rem; }
 .teachers-intro p  { font-size: 1.05rem; line-height: 1.55; opacity: .78; margin: 0; }
 .teachers-pillars { list-style: none; padding: 0; margin: 0 0 1.5rem; display: flex; flex-wrap: wrap; gap: .6rem; justify-content: center; }
-.teachers-pillars li { background: #f3ede4; border-radius: 999px; padding: .45rem 1rem; font-size: .95rem; line-height: 1.2; }
-.teachers-price { display: inline-block; background: #ff6b35; color: #fff; padding: .5rem 1.1rem; border-radius: 999px; font-weight: 600; font-size: 1rem; }
+.teachers-pillars li { background: #f4efe2; border-radius: 999px; padding: .45rem 1rem; font-size: .95rem; line-height: 1.2; }
+.teachers-price { display: inline-block; background: #f5a623; color: #fff; padding: .5rem 1.1rem; border-radius: 999px; font-weight: 600; font-size: 1rem; }
 .teachers-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
@@ -128,7 +142,7 @@ html[lang="en"] [data-lang="en"] { display: inline !important; }
 }
 .teacher-card {
   display: flex; flex-direction: column;
-  background: #f3ede4;
+  background: #f4efe2;
   border-radius: 1.25rem;
   padding: 1.5rem;
   transition: transform .25s ease, box-shadow .25s ease;
@@ -138,7 +152,7 @@ html[lang="en"] [data-lang="en"] { display: inline !important; }
   width: 100%; aspect-ratio: 4 / 3; object-fit: cover; object-position: center top;
   border-radius: .75rem;
   margin-bottom: 1.25rem;
-  background: #e8dfd1;
+  background: #e8e2d3;
 }
 .teacher-name { margin: 0 0 .75rem; font-weight: 700; font-size: 1.35rem; line-height: 1.2; }
 .teacher-bio  { font-size: .92rem; line-height: 1.55; opacity: .82; margin: 0; }
@@ -206,12 +220,12 @@ html[lang="en"] [data-lang="en"] { display: inline !important; }
      border, neutral shadow, dark chevron. Hover / press inverts to dark
      for clear feedback on every device. */
   background: var(--lpt-surface) !important;
-  border: 1px solid rgba(42, 24, 16, .08) !important;
+  border: 1px solid rgba(26, 26, 26, .08) !important;
   border-radius: 999px !important;
   color: var(--lpt-text) !important;
   box-shadow:
-    0 6px 18px -6px rgba(42, 24, 16, .18),
-    0 2px 4px -2px rgba(42, 24, 16, .06) !important;
+    0 6px 18px -6px rgba(26, 26, 26, .18),
+    0 2px 4px -2px rgba(26, 26, 26, .06) !important;
   opacity: 1 !important;
   z-index: 10 !important;
   cursor: pointer !important;
@@ -235,7 +249,7 @@ html[lang="en"] [data-lang="en"] { display: inline !important; }
   background: var(--lpt-text) !important;
   color: #fff !important;
   border-color: var(--lpt-text) !important;
-  box-shadow: 0 14px 28px -8px rgba(42, 24, 16, .28) !important;
+  box-shadow: 0 14px 28px -8px rgba(26, 26, 26, .28) !important;
   transform: translateX(calc(-100% - 15px)) translateY(-2px) !important;
 }
 .testimonial-home-section .w-slider-arrow-right:hover,
@@ -244,7 +258,7 @@ html[lang="en"] [data-lang="en"] { display: inline !important; }
   background: var(--lpt-text) !important;
   color: #fff !important;
   border-color: var(--lpt-text) !important;
-  box-shadow: 0 14px 28px -8px rgba(42, 24, 16, .28) !important;
+  box-shadow: 0 14px 28px -8px rgba(26, 26, 26, .28) !important;
   transform: translateX(15px) translateY(-2px) !important;
 }
 .testimonial-home-section .w-slider-arrow-left:active {
@@ -563,12 +577,12 @@ html[lang="en"] [data-lang="en"] { display: inline !important; }
 .camp-card {
   background: var(--lpt-surface); border-radius: 1.5rem; overflow: hidden;
   display: flex; flex-direction: column;
-  box-shadow: 0 20px 50px -25px rgba(42, 24, 16, .15);
+  box-shadow: 0 20px 50px -25px rgba(26, 26, 26, .15);
   transition: transform .25s ease, box-shadow .25s ease;
 }
 .camp-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 30px 70px -25px rgba(42, 24, 16, .25);
+  box-shadow: 0 30px 70px -25px rgba(26, 26, 26, .25);
 }
 .camp-photo-wrap {
   position: relative; width: 100%; aspect-ratio: 16 / 9;
@@ -639,7 +653,7 @@ html[lang="en"] [data-lang="en"] { display: inline !important; }
 
 /* === Karaoke text effect: characters light up as user scrolls through === */
 [data-karaoke] {
-  color: rgba(42, 24, 16, .18);
+  color: rgba(26, 26, 26, .18);
   /* Allow wrapping mid-word for CJK (no spaces) and at spaces for latin scripts. */
   overflow-wrap: anywhere;
   word-break: normal;
@@ -648,7 +662,7 @@ html[lang="en"] [data-lang="en"] { display: inline !important; }
   margin-right: auto;
 }
 [data-karaoke] .karaoke-char {
-  color: rgba(42, 24, 16, .18);
+  color: rgba(26, 26, 26, .18);
   transition: color .25s cubic-bezier(.2,.8,.2,1);
 }
 [data-karaoke] .karaoke-char.is-lit { color: var(--lpt-text); }
@@ -717,13 +731,24 @@ html[lang="en"] [data-lang="en"] { display: inline !important; }
 .section.blog-carousel-section,
 .section.faq-section { z-index: 2; position: relative; }
 
+/* Stats numbers pop in brand red — same trick the real LPT site uses
+   on "7年 / 25名 / 160+ / 1 000+" so the numbers read as headline first. */
+.section.stats-section .stat-count h3,
+.section.stats-section .text-h2 {
+  color: var(--lpt-red) !important;
+}
+.section.stats-section .stat-item > div:not(.stat-count) {
+  color: var(--lpt-text);
+  opacity: .85;
+}
+
 /* Star Students page */
 .students-wrap { max-width: 1200px; margin: 0 auto; padding: 3rem 1.5rem; }
 .students-hero { text-align: center; padding: 3rem 0 2.5rem; }
 .students-h1   { font-size: clamp(2.5rem, 6vw, 4rem); font-weight: 700; line-height: 1.05; margin: 0 0 1.5rem; }
 .students-pillars { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: .75rem; justify-content: center; }
 .students-pillars li {
-  background: #f3ede4; border-radius: 999px; padding: .5rem 1.1rem;
+  background: #f4efe2; border-radius: 999px; padding: .5rem 1.1rem;
   font-size: .95rem; line-height: 1.2;
 }
 .students-grid {
@@ -735,7 +760,7 @@ html[lang="en"] [data-lang="en"] { display: inline !important; }
 .student-card { display: flex; flex-direction: column; }
 .student-photo {
   width: 100%; aspect-ratio: 1 / 1; object-fit: cover; object-position: center top;
-  border-radius: .9rem; background: #f3ede4;
+  border-radius: .9rem; background: #f4efe2;
 }
 .student-name { margin-top: .8rem; font-size: .95rem; font-weight: 600; text-align: center; }
 
@@ -748,7 +773,7 @@ html[lang="en"] [data-lang="en"] { display: inline !important; }
 }
 .work-photo {
   width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: .75rem;
-  background: #f3ede4;
+  background: #f4efe2;
 }
 
 @media (max-width: 640px) {
@@ -778,7 +803,7 @@ html[lang="en"] [data-lang="en"] { display: inline !important; }
 }
 .lang-nudge-btn.primary { background: var(--lpt-surface); color: #1a1a1a; font-weight: 600; }
 .lang-nudge-btn:hover { background: rgba(255,255,255,.22); }
-.lang-nudge-btn.primary:hover { background: #f5e9d8; }
+.lang-nudge-btn.primary:hover { background: #fde6c5; }
 
 /* === Trust band — emerging card with rounded top corners === */
 .section.trust-band {
@@ -865,21 +890,24 @@ html[lang="en"] [data-lang="en"] { display: inline !important; }
 .section.finder-section,
 .finder-section {
   padding: 9rem 1.5rem 10rem;
-  /* Visibly deeper warm tan than the surrounding cream — the finder block
-     is the page's main "stop and choose" moment so it should pop against
-     the surrounding sections. !important needed because earlier global
-     `.section:not(.hero-home-section)` rules try to force --lpt-bg. */
+  /* Soft ivory base + LPT brand-color blobs as decorative accents
+     (yellow top-right + blue mid-left + red bottom). Each blob is a
+     wide radial-gradient with low alpha — they tint the section
+     without overpowering it, just like the floating shapes on the
+     real lespetitstrilingues.com homepage. */
   background:
-    radial-gradient(1200px 600px at 50% 0%, #f6e3c0 0%, transparent 70%),
-    linear-gradient(180deg, #f0e3c4 0%, #e6d5ad 100%) !important;
+    radial-gradient(420px 380px at 92% 18%, rgba(245, 185, 66, .32) 0%, transparent 60%),
+    radial-gradient(380px 340px at 6% 55%, rgba(74, 144, 194, .22) 0%, transparent 60%),
+    radial-gradient(520px 280px at 75% 95%, rgba(214, 40, 40, .16) 0%, transparent 65%),
+    linear-gradient(180deg, #fdfaf3 0%, #fbf6e8 100%) !important;
   position: relative;
   overflow: hidden;
 }
 .finder-section::before {
   content: ''; position: absolute; inset: 0;
   background-image:
-    radial-gradient(circle at 15% 20%, rgba(42, 24, 16, .04) 1px, transparent 1.5px),
-    radial-gradient(circle at 85% 75%, rgba(42, 24, 16, .04) 1px, transparent 1.5px);
+    radial-gradient(circle at 15% 20%, rgba(26, 26, 26, .04) 1px, transparent 1.5px),
+    radial-gradient(circle at 85% 75%, rgba(26, 26, 26, .04) 1px, transparent 1.5px);
   background-size: 32px 32px;
   pointer-events: none;
   z-index: 0;
@@ -889,7 +917,7 @@ html[lang="en"] [data-lang="en"] { display: inline !important; }
 .finder-eyebrow {
   display: inline-block;
   background: var(--lpt-surface);
-  border: 1px solid rgba(42, 24, 16, .1);
+  border: 1px solid rgba(26, 26, 26, .1);
   color: var(--lpt-text);
   padding: .45rem 1rem;
   border-radius: 999px;
@@ -921,8 +949,8 @@ html[lang="en"] [data-lang="en"] { display: inline !important; }
   padding: 3.5rem 3rem;
   box-shadow:
     0 1px 0 rgba(255,255,255,.7) inset,
-    0 50px 100px -30px rgba(42, 24, 16, .25),
-    0 20px 40px -20px rgba(42, 24, 16, .15);
+    0 50px 100px -30px rgba(26, 26, 26, .25),
+    0 20px 40px -20px rgba(26, 26, 26, .15);
   text-align: left;
   position: relative;
   overflow: hidden;
@@ -946,7 +974,7 @@ html[lang="en"] [data-lang="en"] { display: inline !important; }
   width: 28px;
   height: 4px;
   border-radius: 999px;
-  background: rgba(42, 24, 16, .12);
+  background: rgba(26, 26, 26, .12);
   transition: background-color .35s ease, width .35s ease;
 }
 .finder-dot.is-active { background: var(--lpt-text); width: 48px; }
@@ -969,55 +997,55 @@ html[lang="en"] [data-lang="en"] { display: inline !important; }
    keyframes would replay every time the user scrolls past, transitions
    only fire once per state flip.
 */
-.finder-section .finder-eyebrow,
-.finder-section .finder-h2,
-.finder-section .finder-sub,
+/* Entrance animation: each child plays its keyframe on every page load
+   (no IntersectionObserver — keep it simple, just delay the start so
+   the cascade still feels staggered). The user only ever sees this
+   block once per visit, so it doesn't matter if it isn't tied to
+   scroll position. */
+.finder-section .finder-eyebrow {
+  animation: finderInDown .8s cubic-bezier(.22, .9, .3, 1) .1s both;
+}
+.finder-section .finder-h2 {
+  animation: finderInUp .8s cubic-bezier(.22, .9, .3, 1) .25s both;
+}
+.finder-section .finder-sub {
+  animation: finderFadeIn .8s ease .4s both;
+}
 .finder-section .finder-card {
-  opacity: 0;
-  transform: translateY(28px);
-  transition:
-    opacity .7s cubic-bezier(.22, .9, .3, 1),
-    transform .7s cubic-bezier(.22, .9, .3, 1),
-    box-shadow .9s ease;
-  will-change: transform, opacity;
+  animation:
+    finderInUp .9s cubic-bezier(.22, .9, .3, 1) .55s both,
+    finderCardLand 1.4s cubic-bezier(.22, .9, .3, 1) .55s both;
 }
-.finder-section .finder-eyebrow { transition-delay: .05s; transform: translateY(-12px); }
-.finder-section .finder-h2     { transition-delay: .15s; }
-.finder-section .finder-sub    { transition-delay: .28s; }
-.finder-section .finder-card   { transition-delay: .42s; transform: translateY(40px) scale(.97); }
-
-.finder-section.is-in-view .finder-eyebrow,
-.finder-section.is-in-view .finder-h2,
-.finder-section.is-in-view .finder-sub {
-  opacity: 1;
-  transform: translateY(0);
+@keyframes finderInDown {
+  from { opacity: 0; transform: translateY(-12px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
-.finder-section.is-in-view .finder-card {
-  opacity: 1;
-  transform: translateY(0) scale(1);
-  /* Gentle attention pulse: the card lands with an extra-deep shadow,
-     then settles back over 1.2s. Pure CSS, fires only on the in-view
-     transition because we keyframe on the .is-in-view class. */
-  animation: finderCardLand 1.4s cubic-bezier(.22, .9, .3, 1) .42s both;
+@keyframes finderInUp {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes finderFadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
 }
 @keyframes finderCardLand {
   0%   {
     box-shadow:
       0 1px 0 rgba(255,255,255,.7) inset,
-      0 0 0 0 rgba(42, 24, 16, 0),
-      0 0 0 0 rgba(42, 24, 16, 0);
+      0 0 0 0 rgba(26, 26, 26, 0),
+      0 0 0 0 rgba(26, 26, 26, 0);
   }
   35%  {
     box-shadow:
       0 1px 0 rgba(255,255,255,.7) inset,
-      0 70px 110px -40px rgba(42, 24, 16, .35),
-      0 30px 60px -20px rgba(42, 24, 16, .20);
+      0 70px 110px -40px rgba(26, 26, 26, .35),
+      0 30px 60px -20px rgba(26, 26, 26, .20);
   }
   100% {
     box-shadow:
       0 1px 0 rgba(255,255,255,.7) inset,
-      0 50px 100px -30px rgba(42, 24, 16, .25),
-      0 20px 40px -20px rgba(42, 24, 16, .15);
+      0 50px 100px -30px rgba(26, 26, 26, .25),
+      0 20px 40px -20px rgba(26, 26, 26, .15);
   }
 }
 /* Respect users who turn animations off — no slide, no pulse. */
@@ -1045,7 +1073,7 @@ html[lang="en"] [data-lang="en"] { display: inline !important; }
   gap: .75rem;
 }
 .finder-opt {
-  border: 1.5px solid rgba(42, 24, 16, .12);
+  border: 1.5px solid rgba(26, 26, 26, .12);
   background: var(--lpt-surface);
   border-radius: 1rem;
   padding: 1.1rem 1.25rem;
