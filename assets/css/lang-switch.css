@@ -257,6 +257,36 @@ html[lang="en"] [data-lang="en"] { display: inline !important; }
    hide the "small" variant. Force SVG to a clean 18px size with brand colour.
    Don't touch width/height — letting the template auto-size avoids collapsing
    the SVG to 0px (which is what was making the buttons look like blank discs). */
+/* Kill the inner Webflow `.button-slider` chrome — it inherits from a
+   Webflow design-token chain that resolves to the brand orange (because
+   we overrode `--_🎨-color--base---accent--primary` with --lpt-primary).
+   The visible "pill" is the OUTER .w-slider-arrow-* element we already
+   style; the inner just needs to render the icon. */
+.testimonial-home-section .w-slider-arrow-left .button-slider,
+.testimonial-home-section .w-slider-arrow-right .button-slider,
+.blog-carousel-section .w-slider-arrow-left .button-slider,
+.blog-carousel-section .w-slider-arrow-right .button-slider {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  color: inherit !important;
+  padding: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+.testimonial-home-section .w-slider-arrow-left .wrap-icon-slider,
+.testimonial-home-section .w-slider-arrow-right .wrap-icon-slider,
+.blog-carousel-section .w-slider-arrow-left .wrap-icon-slider,
+.blog-carousel-section .w-slider-arrow-right .wrap-icon-slider {
+  width: 100% !important;
+  height: 100% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
 .testimonial-home-section .w-slider-arrow-left .icon-slider-button.large,
 .testimonial-home-section .w-slider-arrow-right .icon-slider-button.large {
   display: flex !important;
