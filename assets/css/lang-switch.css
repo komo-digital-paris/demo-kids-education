@@ -169,12 +169,11 @@ html[lang="en"] [data-lang="en"] { display: inline !important; }
 .testimonial-home-section .slide-testimonial.w-slide {
   padding: 0 .75rem;       /* breathing room between slides */
   box-sizing: border-box;
-  /* Force full opacity — Webflow's slider script doesn't reliably set .w--current
-     on init, so an opacity-based active-slide rule leaves cards invisible.
-     The peek-at-edges effect (visible mask overflow) is enough visual hierarchy. */
-  opacity: 1 !important;
-  transform: none !important;
-  transition: none;
+  /* Force full opacity on init — our manual controller reliably re-applies
+     opacity / transform per slide on every advance, so we don't need the
+     `transform: none !important` defensive override that used to live here
+     (it was actually blocking the controller from translating slides). */
+  opacity: 1;
 }
 /* Slider nav dots: hide (autoplay + peek is enough).
    Arrows: tight horizontal pair centered just below the testimonial cards,

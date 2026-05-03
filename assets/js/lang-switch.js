@@ -201,6 +201,17 @@
     }
     return 0;
   }
+  // Slides are inline-block in normal flow inside the .w-slider-mask, so the
+  // pitch between them is `slideWidth + horizontal padding/gap`, NOT just the
+  // mask width. We need this pitch to translate every slide by the same amount
+  // (shifting the whole strip) so slide N lands exactly on the anchor.
+  // offsetLeft is the perfect tool: it returns the slide's natural offset from
+  // its parent, ignoring any CSS transforms — so we never have to clear styles
+  // and the value is stable across slider states.
+  function getPitch(slides){
+    if (slides.length < 2) return slides[0].getBoundingClientRect().width;
+    return slides[1].offsetLeft - slides[0].offsetLeft;
+  }
   function advance(direction){
     var slider = getSlider();
     if (!slider) { console.warn('[LPT carousel] no slider'); return; }
@@ -209,14 +220,13 @@
     var n = slides.length;
     var current = getCurrentIdx(slides);
     var next = (current + direction + n) % n;
-    var mask = slider.querySelector('.w-slider-mask');
-    var slideWidth = mask
-      ? mask.getBoundingClientRect().width
-      : slides[0].getBoundingClientRect().width;
+    var pitch = getPitch(slides);
+    // To bring slide `next` into the active spot we shift the whole strip
+    // left by next*pitch — one transform value applied to every slide.
+    var shift = -next * pitch;
     slides.forEach(function(s, i){
-      var offset = (i - next) * slideWidth;
       s.style.transition = 'transform 600ms cubic-bezier(.645,.045,.355,1)';
-      s.style.transform = 'translateX(' + offset + 'px)';
+      s.style.transform = 'translateX(' + shift + 'px)';
       s.setAttribute('aria-hidden', i === next ? 'false' : 'true');
       s.classList.toggle('w--current', i === next);
     });
@@ -260,13 +270,10 @@
     if (!slider.querySelector('.w-slide.w--current')) {
       slides[current].classList.add('w--current');
     }
-    var mask = slider.querySelector('.w-slider-mask');
-    var slideWidth = mask
-      ? mask.getBoundingClientRect().width
-      : slides[0].getBoundingClientRect().width;
-    slides.forEach(function(s, i){
-      var offset = (i - current) * slideWidth;
-      s.style.transform = 'translateX(' + offset + 'px)';
+    var pitch = getPitch(slides);
+    var shift = -current * pitch;
+    slides.forEach(function(s){
+      s.style.transform = 'translateX(' + shift + 'px)';
     });
     return true;
   }
