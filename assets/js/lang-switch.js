@@ -225,10 +225,14 @@
     // left by next*pitch — one transform value applied to every slide.
     var shift = -next * pitch;
     slides.forEach(function(s, i){
-      s.style.transition = 'transform 600ms cubic-bezier(.645,.045,.355,1)';
+      var isCur = i === next;
+      s.style.transition = 'transform 600ms cubic-bezier(.645,.045,.355,1), opacity 400ms ease';
       s.style.transform = 'translateX(' + shift + 'px)';
-      s.setAttribute('aria-hidden', i === next ? 'false' : 'true');
-      s.classList.toggle('w--current', i === next);
+      // Active slide pops to full white card; the peeking ones fade so the
+      // user immediately knows which one is "current".
+      s.style.opacity = isCur ? '1' : '0.32';
+      s.setAttribute('aria-hidden', isCur ? 'false' : 'true');
+      s.classList.toggle('w--current', isCur);
     });
     console.log('[LPT carousel] advance', direction, '→ slide', next + 1, '/', n);
   }
@@ -272,8 +276,9 @@
     }
     var pitch = getPitch(slides);
     var shift = -current * pitch;
-    slides.forEach(function(s){
+    slides.forEach(function(s, i){
       s.style.transform = 'translateX(' + shift + 'px)';
+      s.style.opacity = i === current ? '1' : '0.32';
     });
     return true;
   }
