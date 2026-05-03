@@ -11,10 +11,11 @@
   --lpt-primary-dark:   #d8901a;   /* hover */
   --lpt-secondary:      #d62828;   /* brand red — accents & stat numbers */
 
-  /* Brand-blob accents */
-  --lpt-yellow:         #f5b942;   /* warm golden yellow */
-  --lpt-blue:           #4a90c2;   /* friendly medium blue (logo tree) */
-  --lpt-red:            #d62828;   /* brand red */
+  /* Brand-blob accents — more vibrant than the first attempt, but
+     still soft enough for a kids' school. Think Crayola, not neon. */
+  --lpt-yellow:         #ffc83d;   /* sunny golden yellow */
+  --lpt-blue:           #3aa8e0;   /* friendly sky blue */
+  --lpt-red:            #ef5349;   /* warm tomato red (softer than pure scarlet) */
 
   /* Text — clean near-black for readability, no more warm-brown muddy */
   --lpt-text:           #1a1a1a;
@@ -897,14 +898,13 @@ html[lang="en"] [data-lang="en"] { display: inline !important; }
 .finder-section {
   padding: 9rem 1.5rem 10rem;
   /* Soft ivory base + LPT brand-color blobs as decorative accents
-     (yellow top-right + blue mid-left + red bottom). Each blob is a
-     wide radial-gradient with low alpha — they tint the section
-     without overpowering it, just like the floating shapes on the
-     real lespetitstrilingues.com homepage. */
+     (yellow top-right + blue mid-left + red bottom). Wider, more
+     saturated than the first pass — playful enough to read as the
+     "kids school colours" without being garish. */
   background:
-    radial-gradient(420px 380px at 92% 18%, rgba(245, 185, 66, .32) 0%, transparent 60%),
-    radial-gradient(380px 340px at 6% 55%, rgba(74, 144, 194, .22) 0%, transparent 60%),
-    radial-gradient(520px 280px at 75% 95%, rgba(214, 40, 40, .16) 0%, transparent 65%),
+    radial-gradient(480px 440px at 92% 16%, rgba(255, 200, 61, .55) 0%, transparent 62%),
+    radial-gradient(440px 400px at 4% 52%, rgba(58, 168, 224, .42) 0%, transparent 62%),
+    radial-gradient(560px 320px at 75% 96%, rgba(239, 83, 73, .35) 0%, transparent 66%),
     linear-gradient(180deg, #fdfaf3 0%, #fbf6e8 100%) !important;
   position: relative;
   overflow: hidden;
