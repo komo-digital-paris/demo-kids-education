@@ -2154,7 +2154,7 @@ textarea.w-input, textarea.w-select {
   --_🔠-typography---letter-spacing--body-3: 0px;
   --section-padding--large: 160px;
   --_spacing---radius--24\<deleted\|variable-7ed2b0ff-bd46-a18a-a853-254e7a6feaf7\>: 24px;
-  --_🎨-color--base---background-base--light: #ffffff;
+  --_🎨-color--base---background-base--light: #faf6ed;
   --section-padding--extra-large: 200px;
   --section-padding--extra-small: 32px;
   --section-padding--medium: 120px;
@@ -2169,8 +2169,8 @@ textarea.w-input, textarea.w-select {
   --_🎨-color--tokens---border--subtle: var(--_🎨-color--base---neutral--dark-16);
   --_🔘-radius---general--small: 8px;
   --_🎨-color--base---ui--error: #c94040;
-  --_🎨-color--base---neutral--light-100: #ffffff;
-  --_🎨-color--base---neutral--dark-100: #1a1a1a;
+  --_🎨-color--base---neutral--light-100: #faf6ed;
+  --_🎨-color--base---neutral--dark-100: #2a1810;
   --_🎨-color--tokens---background--blue: var(--_🎨-color--base---color-blue--light-100);
   --_🎨-color--tokens---background--peach: var(--_🎨-color--base---color-peach--light-100);
   --_🎨-color--tokens---background--mint: var(--_🎨-color--base---color-mint--light-100);
@@ -2284,7 +2284,7 @@ textarea.w-input, textarea.w-select {
   --_❇️-icon---icon-stroke: 1.5px;
   --_❇️-icon---stroke-dashoffset--main: 200px;
   --_❇️-icon---stroke-dasharray--main: 200px;
-  --_🎨-color--base---background-base--dark: #1a1a1a;
+  --_🎨-color--base---background-base--dark: #2a1810;
   --_🎨-color--tokens---border--medium: var(--_🎨-color--base---neutral--dark-48);
   --_🎨-color--tokens---icon--strong: var(--_🎨-color--base---neutral--dark-100);
   --_🎨-color--tokens---icon--medium: var(--_🎨-color--base---neutral--dark-64);
@@ -5184,7 +5184,7 @@ figcaption {
 }
 
 .checkbox-contact {
-  background-color: #ffffff;
+  background-color: #faf6ed;
   border: 1px solid #0000;
   border-radius: 100vw;
   flex: none;
@@ -5194,7 +5194,7 @@ figcaption {
 }
 
 .checkbox-contact.w--redirected-checked {
-  background-color: #ffffff;
+  background-color: #faf6ed;
   background-image: url("../images/690a285b9bbe8f58081e45e8_Tick.svg");
   background-position: 50%;
   background-size: auto;
@@ -7490,7 +7490,7 @@ figcaption {
   grid-row-gap: 8px;
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
-  color: #ffffff;
+  color: #faf6ed;
   letter-spacing: 0;
   cursor: pointer;
   border-radius: 8px;
@@ -7508,7 +7508,7 @@ figcaption {
 }
 
 .ultra_cta:hover {
-  color: #ffffff;
+  color: #faf6ed;
 }
 
 .ultra-pop_close-circle {
@@ -7550,7 +7550,7 @@ figcaption {
   grid-row-gap: 8px;
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
-  color: #ffffff;
+  color: #faf6ed;
   letter-spacing: 0;
   cursor: pointer;
   border-radius: 8px;
@@ -7568,7 +7568,7 @@ figcaption {
 }
 
 .ultra-small-bar:hover {
-  color: #ffffff;
+  color: #faf6ed;
 }
 
 .ultra-small_cta_text-mask {
