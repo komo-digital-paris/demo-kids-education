@@ -11,10 +11,11 @@
   --lpt-primary-dark:   #d8901a;   /* hover */
   --lpt-secondary:      #d62828;   /* brand red — accents & stat numbers */
 
-  /* Brand-blob accents — more vibrant than the first attempt, but
-     still soft enough for a kids' school. Think Crayola, not neon. */
-  --lpt-yellow:         #ffc83d;   /* sunny golden yellow */
-  --lpt-blue:           #3aa8e0;   /* friendly sky blue */
+  /* Brand-blob accents — playful kids-school colours, not neon.
+     Think Crayola pastel: bright enough to read as deliberate brand,
+     soft enough that a parent doesn't squint. */
+  --lpt-yellow:         #ffe066;   /* soft sunshine — lighter, less amber */
+  --lpt-blue:           #2a93dc;   /* punchier sky blue (was #3aa8e0, too pale) */
   --lpt-red:            #ef5349;   /* warm tomato red (softer than pure scarlet) */
 
   /* Text — clean near-black for readability, no more warm-brown muddy */
@@ -897,14 +898,15 @@ html[lang="en"] [data-lang="en"] { display: inline !important; }
 .section.finder-section,
 .finder-section {
   padding: 9rem 1.5rem 10rem;
-  /* Soft ivory base + LPT brand-color blobs as decorative accents
-     (yellow top-right + blue mid-left + red bottom). Wider, more
-     saturated than the first pass — playful enough to read as the
-     "kids school colours" without being garish. */
+  /* Soft ivory base + LPT brand-color blobs as decorative accents:
+     soft sunshine yellow top-right, punchy sky blue mid-left, warm
+     tomato red bottom. All three blobs at similar weight (~.55 alpha)
+     so they read as a coherent kids-school palette, not "yellow
+     dominant + others as afterthoughts". */
   background:
-    radial-gradient(480px 440px at 92% 16%, rgba(255, 200, 61, .55) 0%, transparent 62%),
-    radial-gradient(440px 400px at 4% 52%, rgba(58, 168, 224, .42) 0%, transparent 62%),
-    radial-gradient(560px 320px at 75% 96%, rgba(239, 83, 73, .35) 0%, transparent 66%),
+    radial-gradient(480px 440px at 92% 16%, rgba(255, 224, 102, .55) 0%, transparent 62%),
+    radial-gradient(460px 420px at 4% 52%, rgba(42, 147, 220, .55) 0%, transparent 62%),
+    radial-gradient(560px 320px at 75% 96%, rgba(239, 83, 73, .42) 0%, transparent 66%),
     linear-gradient(180deg, #fdfaf3 0%, #fbf6e8 100%) !important;
   position: relative;
   overflow: hidden;
