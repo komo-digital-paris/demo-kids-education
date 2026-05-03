@@ -682,10 +682,12 @@ html[lang="en"] [data-lang="en"] { display: inline !important; }
   display: flex;
   flex-direction: column;
   position: sticky;
-  /* Desktop: ~50vh of natural scroll before the hero pins, so the user
-     gets a feel of motion before the stacking takes over. On mobile we
-     override this further down — see the breakpoint below. */
-  top: -50vh;
+  /* Desktop: ~25vh of natural scroll before the hero pins, so the
+     trust-band starts climbing earlier. The 50vh original felt
+     sluggish — the user lost interest waiting for something to
+     happen. On mobile we override to top:0 (pin immediately) — see
+     the breakpoint below. */
+  top: -25vh;
   z-index: 1;
 }
 /* Mobile: skip the 50vh pre-scroll. Pin the hero at top: 0 so the
