@@ -1,3 +1,14 @@
+/* === Google Fonts: playful display + handwriting accent =========
+   Loaded via @import (single change vs editing 14 HTML files).
+   - Fredoka:  rounded, friendly display for headings (replaces the
+     stiff Raveo Display Webflow ships with). Multiple weights so
+     we still get visual hierarchy.
+   - Caveat:   handwriting script. Used SPARINGLY on tiny eyebrows
+     ("3 questions to find the right class", "Trusted by 1,000+
+     families") so the site feels like a school notebook, not a
+     greeting card. */
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Caveat:wght@500;700&display=swap');
+
 /* === LPT brand palette ===========================================
    Mirrors lespetitstrilingues.com without going pure-white-stark.
    Page background stays a barely-warm ivory (so the site keeps its
@@ -1629,4 +1640,217 @@ html[lang="fr"] .wrap-about-home h2.text-h4 {
   .course-tracks { gap: 1rem; }
   .course-track { padding: 1.5rem 1.25rem; }
   .course-details-grid { padding: 1.5rem 1rem; gap: .75rem; }
+}
+
+/* ===================================================================
+   PLAYFUL UPGRADES
+   ===================================================================
+   Goal: stop looking like a corporate SaaS template, start looking
+   like a kids' trilingual school. The previous palette pass was
+   correct (yellow/blue/red blobs, rainbow stat numbers) but the
+   typography stayed sterile and nothing on the page MOVED.
+
+   This block adds:
+     1. Fredoka display font on headings        → friendly, rounded
+     2. Caveat handwriting on tiny eyebrows     → school-notebook feel
+     3. Squishy bounce hovers on cards/buttons  → "alive" not robotic
+     4. Hand-drawn wavy underlines under H2s    → marker-pen accent
+     5. Floating sparkle SVGs in section corners → playful confetti
+     6. Stat numbers pop-in + idle wobble       → gives them character
+     7. Tilted stickers (hero label, trust band logos lift)
+     8. prefers-reduced-motion respected
+   =================================================================== */
+
+/* --- 1. Display & accent fonts --------------------------------- */
+h1, h2, h3, h4, h5, h6,
+.text-h1, .text-h2, .text-h3, .text-h4, .text-h5, .text-h6,
+.heading-style-h1, .heading-style-h2, .heading-style-h3,
+.label-large,
+.finder-h2,
+.course-h1 {
+  font-family: 'Fredoka', 'Raveo Display', system-ui, -apple-system, sans-serif !important;
+  font-weight: 600;
+  letter-spacing: -0.012em;
+}
+
+/* Caveat ONLY on these specific small decorative labels — keep the
+   rest of the UI in clean Parkinsans/Fredoka so readability survives */
+.finder-eyebrow,
+.trust-band-label,
+.course-eyebrow {
+  font-family: 'Caveat', 'Fredoka', cursive !important;
+  font-weight: 700;
+  font-size: 1.5em;
+  letter-spacing: 0;
+  line-height: 1.15;
+  color: var(--lpt-primary);
+}
+
+/* --- 2. Squishy bounce hover on cards (overshoot easing) ------- */
+.feature-card,
+.program-card,
+.course-track,
+.map-card {
+  transition: transform .35s cubic-bezier(.34, 1.56, .64, 1),
+              box-shadow .25s ease !important;
+  will-change: transform;
+}
+.feature-card:hover {
+  transform: translateY(-6px) rotate(-1deg);
+}
+/* Alternate the tilt direction so a row of cards looks playful, not
+   like everyone leaning the same way */
+.feature-card:nth-child(2n):hover {
+  transform: translateY(-6px) rotate(1deg);
+}
+.program-card:hover {
+  transform: translateY(-8px) rotate(1deg) scale(1.02);
+  box-shadow: 0 18px 40px -12px rgba(26, 26, 26, .18);
+}
+.course-track:hover {
+  transform: translateY(-4px) rotate(-.4deg);
+}
+.course-track:nth-child(2):hover {
+  transform: translateY(-4px) rotate(.4deg);
+}
+.map-card:hover {
+  transform: translateY(-4px) rotate(-1deg);
+}
+
+/* --- 3. Bouncy CTAs ------------------------------------------- */
+.cta-main,
+.cta-small,
+.course-cta-main {
+  transition: transform .22s cubic-bezier(.34, 1.56, .64, 1),
+              box-shadow .25s ease !important;
+}
+.cta-main:hover,
+.course-cta-main:hover {
+  transform: translateY(-3px) scale(1.04);
+}
+.cta-small:hover {
+  transform: translateY(-2px) scale(1.06);
+}
+/* Slight tilt on the primary hero CTA so it feels personable */
+.master-hero-home .cta-main:not(.w-variant-1ff8d96e-78cc-eac8-de90-206ecdaded5f):hover {
+  transform: translateY(-3px) rotate(-1.5deg) scale(1.04);
+}
+
+/* --- 4. Hand-drawn wavy underline under section H2s ------------
+   Inline SVG data-URI in brand orange. Width clamps so it scales
+   with viewport but never gets cartoonish on huge screens. */
+.features-section .text-h4,
+.finder-h2,
+.course-h1 {
+  position: relative;
+  display: inline-block;
+}
+.features-section .text-h4::after,
+.finder-h2::after,
+.course-h1::after {
+  content: '';
+  display: block;
+  width: clamp(70px, 14vw, 150px);
+  height: 14px;
+  margin-top: .4rem;
+  background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 150 14'><path d='M3 8 Q 22 1 42 8 T 82 8 T 122 8 T 148 6' stroke='%23f5a623' stroke-width='3.5' fill='none' stroke-linecap='round'/></svg>") no-repeat left center;
+  background-size: contain;
+}
+
+/* --- 5. Floating sparkle SVGs in section corners ----------------
+   Star shapes in brand yellow / blue / red. Subtle twinkle loop
+   so the eye notices them without them being distracting. */
+.features-section,
+.finder-section {
+  position: relative;
+  overflow: hidden;
+}
+.features-section::before,
+.features-section::after,
+.finder-section::before {
+  content: '';
+  position: absolute;
+  width: 36px;
+  height: 36px;
+  pointer-events: none;
+  background-repeat: no-repeat;
+  background-size: contain;
+  opacity: .85;
+  z-index: 1;
+}
+.features-section::before {
+  top: 7%;
+  right: 5%;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23ffe066'><path d='M12 2 L14 9 L22 12 L14 15 L12 22 L10 15 L2 12 L10 9 Z'/></svg>");
+  animation: lpt-twinkle 3.4s ease-in-out infinite;
+}
+.features-section::after {
+  bottom: 10%;
+  left: 4%;
+  width: 28px;
+  height: 28px;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%232a93dc'><path d='M12 2 L14 9 L22 12 L14 15 L12 22 L10 15 L2 12 L10 9 Z'/></svg>");
+  animation: lpt-twinkle 4.1s ease-in-out infinite .8s;
+}
+.finder-section::before {
+  top: 8%;
+  left: 5%;
+  width: 32px;
+  height: 32px;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23ef5349'><path d='M12 2 L14 9 L22 12 L14 15 L12 22 L10 15 L2 12 L10 9 Z'/></svg>");
+  animation: lpt-twinkle 3.7s ease-in-out infinite .4s;
+}
+
+@keyframes lpt-twinkle {
+  0%, 100% { transform: scale(1) rotate(0deg);   opacity: .85; }
+  50%      { transform: scale(1.25) rotate(15deg); opacity: 1;  }
+}
+
+/* --- 6. Stat numbers: pop-in then idle wobble ------------------ */
+.stat-item h3 {
+  display: inline-block;
+  transform-origin: center bottom;
+  animation: lpt-stat-pop 1.1s cubic-bezier(.34, 1.56, .64, 1) both,
+             lpt-stat-wobble 5s ease-in-out infinite 1.6s;
+}
+.stat-item:nth-child(2) h3 { animation-delay: .15s, 1.8s; }
+.stat-item:nth-child(3) h3 { animation-delay: .3s,  2.0s; }
+.stat-item:nth-child(4) h3 { animation-delay: .45s, 2.2s; }
+@keyframes lpt-stat-pop {
+  0%   { transform: scale(.4)  rotate(-12deg); opacity: 0; }
+  60%  { transform: scale(1.15) rotate(4deg);  opacity: 1; }
+  100% { transform: scale(1)   rotate(0deg);   opacity: 1; }
+}
+@keyframes lpt-stat-wobble {
+  0%, 100% { transform: rotate(0deg); }
+  25%      { transform: rotate(-2.5deg); }
+  75%      { transform: rotate(2.5deg); }
+}
+
+/* --- 7. Tilted stickers --------------------------------------- */
+.master-hero-home .label-master {
+  transform: rotate(-2deg);
+  transition: transform .25s cubic-bezier(.34, 1.56, .64, 1);
+}
+.master-hero-home .label-master:hover {
+  transform: rotate(0deg) scale(1.05);
+}
+
+.trust-logo {
+  transition: transform .25s cubic-bezier(.34, 1.56, .64, 1);
+}
+.trust-logo:hover {
+  transform: translateY(-3px) rotate(-2deg);
+}
+
+/* --- 8. Respect prefers-reduced-motion ------------------------ */
+@media (prefers-reduced-motion: reduce) {
+  .feature-card, .program-card, .course-track, .map-card,
+  .cta-main, .cta-small, .course-cta-main,
+  .stat-item h3, .features-section::before, .features-section::after,
+  .finder-section::before, .master-hero-home .label-master, .trust-logo {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+  }
 }
