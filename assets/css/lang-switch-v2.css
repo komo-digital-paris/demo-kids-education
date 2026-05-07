@@ -9,6 +9,27 @@
      greeting card. */
 @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Caveat:wght@500;700&display=swap');
 
+/* === DIAGNOSTIC TEST MARKER ====================================
+   Temporary banner so we can confirm this CSS file is actually
+   loading on the user's machine. Remove once confirmed. */
+body::before {
+  content: '✨ playful upgrade loaded — CSS v2 ✨';
+  display: block;
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 99999;
+  padding: 10px 16px;
+  background: linear-gradient(90deg, #ef5349, #f5a623, #ffe066, #2a93dc);
+  color: #1a1a1a;
+  font-family: 'Caveat', 'Fredoka', cursive;
+  font-weight: 700;
+  font-size: 22px;
+  text-align: center;
+  letter-spacing: .02em;
+  box-shadow: 0 4px 20px rgba(0,0,0,.15);
+}
+body { padding-top: 50px !important; }
+
 /* === LPT brand palette ===========================================
    Mirrors lespetitstrilingues.com without going pure-white-stark.
    Page background stays a barely-warm ivory (so the site keeps its
